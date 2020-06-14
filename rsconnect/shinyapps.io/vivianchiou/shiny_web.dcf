@@ -5,6 +5,6 @@ account: vivianchiou
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2452279
-bundleId: 3267712
+bundleId: 3268019
 url: https://vivianchiou.shinyapps.io/shiny_web/
-when: 1592131101.26889
+when: 1592140524.17213

@@ -10,7 +10,7 @@ output:
     # source_code: embed
     # css: styles.css
     
-# runtime: shiny
+runtime: shiny
 
 ---
 
@@ -37,36 +37,26 @@ library(digest)
 library(bit)
 library(ggplot2)
 library(rlist)
-library(highcharter)
 library(knitr)
 library(evaluate)
 library(leafpop)
 library(widgetframe)
 library(data.table)
 library(dplyr)
-library(htmltools)
-library(flexdashboard)
 library(highcharter)
 library(janitor)
 library(htmltools)
 library(DT)
 library(plotly)
 library(leaflet.extras)
-library(flexdashboard)
-library(leaflet)
 library(leafpop)
 library(purrr)
-library(coronavirus)
-library(covid19italy)
-data(coronavirus)
-data(italy_total)
+ library(httr)
+# library(coronavirus)
+# library(covid19italy)
 ```
 
-<style>                     
-.navbar {
-  background-color:black;
-}
-</style>   
+
 
 ```{r}
 confirmed_color <- "purple"
@@ -78,7 +68,7 @@ death_color <- "red"
 
 ```{r global, include=FALSE}
 
-raw_data <- read.csv("./data/covid_19_data.csv", stringsAsFactors = FALSE)
+raw_data <- read.csv(url("https://vivianchiou.github.io/shiny_web/data/covid_19_data.csv"), stringsAsFactors = FALSE)
 
 covid_19_data <- raw_data %>% janitor::clean_names() %>%
   mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"))
@@ -372,12 +362,12 @@ Column {.sidebar}
 -----------------------------------------------------------------------
 hi!
 
-```{r}
+```{r, warning= FALSE}
 
 # library(htmltools)
-df_open_line_list <- fread("./data/COVID19_open_line_list.csv", encoding = "UTF-8")
+df_open_line_list <- read.csv(url("https://vivianchiou.github.io/shiny_web/data/COVID19_open_line_list.csv"), encoding = "UTF-8" , stringsAsFactors = FALSE)
 
-df_open_line_list$date = as.Date(df_open_line_list$date_confirmation, format = "%d.%m.%y", na.rm = TRUE)
+df_open_line_list$date = as.Date(df_open_line_list$date_confirmation, format = "%d.%m.%y")
 
 # Extract dates
 all_dates <- df_open_line_list$date %>% 
@@ -385,10 +375,22 @@ all_dates <- df_open_line_list$date %>%
   unique() %>% 
   as.POSIXct(origin = "1970-01-01")
 
+# str(df_open_line_list)
+
 df_map = df_open_line_list %>% 
-  select(date, city, latitude, longitude) %>% 
-  na.omit() %>% 
-  filter(longitude %inrange% range(-180:180) & latitude %inrange% range(-90:90)) %>% 
+  select(date, city, latitude, longitude)
+# %>% filter(!is.na(longitude) & !is.na(latitude) & !is.na(date))
+
+# df_map = df_map[!is.na(df_map$longitude),]
+# df_map = df_map[!is.na(df_map$latitude),]
+# df_open_line_list$longitude[654]
+# is.na(df_open_line_list$longitude[654])
+
+df_map$longitude = as.double(df_open_line_list$longitude)
+df_map$latitude = as.double(df_open_line_list$latitude)
+
+df_map = df_map %>% 
+  filter(df_map$longitude %inrange% range(-180:180) & latitude %inrange% range(-90:90)) %>%
   group_by(date, city, longitude, latitude) %>% 
   summarise(n = n()*1) %>% 
   arrange(as.numeric(longitude))

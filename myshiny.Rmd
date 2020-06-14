@@ -10,7 +10,7 @@ output:
     # source_code: embed
     # css: styles.css
     
-runtime: shiny
+# runtime: shiny
 
 ---
 
@@ -78,7 +78,7 @@ death_color <- "red"
 
 ```{r global, include=FALSE}
 
-raw_data <- read.csv("~/data/covid_19_data.csv", stringsAsFactors = FALSE)
+raw_data <- read.csv("./data/covid_19_data.csv", stringsAsFactors = FALSE)
 
 covid_19_data <- raw_data %>% janitor::clean_names() %>%
   mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"))
@@ -375,7 +375,7 @@ hi!
 ```{r}
 
 # library(htmltools)
-df_open_line_list <- fread("~/data/COVID19_open_line_list.csv", encoding = "UTF-8")
+df_open_line_list <- fread("./data/COVID19_open_line_list.csv", encoding = "UTF-8")
 
 df_open_line_list$date = as.Date(df_open_line_list$date_confirmation, format = "%d.%m.%y", na.rm = TRUE)
 

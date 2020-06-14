@@ -68,7 +68,7 @@ death_color <- "red"
 
 ```{r global, include=FALSE}
 
-raw_data <- read.csv(url("https://vivianchiou.github.io/shiny_web/data/covid_19_data.csv"), stringsAsFactors = FALSE)
+raw_data <- read.csv("data/covid_19_data.csv", stringsAsFactors = FALSE)
 
 covid_19_data <- raw_data %>% janitor::clean_names() %>%
   mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"))
@@ -365,7 +365,7 @@ hi!
 ```{r, warning= FALSE}
 
 # library(htmltools)
-df_open_line_list <- read.csv(url("https://vivianchiou.github.io/shiny_web/data/COVID19_open_line_list.csv"), encoding = "UTF-8" , stringsAsFactors = FALSE)
+df_open_line_list <- read.csv("data/COVID19_open_line_list.csv", encoding = "UTF-8" , stringsAsFactors = FALSE)
 
 df_open_line_list$date = as.Date(df_open_line_list$date_confirmation, format = "%d.%m.%y")
 

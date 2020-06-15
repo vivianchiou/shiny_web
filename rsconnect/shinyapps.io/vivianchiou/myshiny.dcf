@@ -1,0 +1,10 @@
+name: myshiny
+title:
+username:
+account: vivianchiou
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2453090
+bundleId: 3269884
+url: https://vivianchiou.shinyapps.io/myshiny/
+when: 1592185737.36994

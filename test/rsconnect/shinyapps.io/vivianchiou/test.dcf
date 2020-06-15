@@ -1,0 +1,10 @@
+name: test
+title:
+username:
+account: vivianchiou
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2453108
+bundleId: 3268271
+url: https://vivianchiou.shinyapps.io/test/
+when: 1592148258.39695

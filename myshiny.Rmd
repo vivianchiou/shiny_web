@@ -14,15 +14,8 @@ runtime: shiny
 
 ---
 
+
 ```{r setup, echo = FALSE, include=FALSE}
-# packages = c("dplyr", "shiny", "shinymaterial", "plotly", "viridisLite", "tidyverse", "shinyWidgets", "DT", "RColorBrewer", "shinyjs", "leaflet", "leaflet.extras", "scales")
-# ipak <- function(pkg){
-#   new.pkg <- pkg[!(pkg %in% installed.packages()[, "Package"])]
-#   if (length(new.pkg)) 
-#     install.packages(new.pkg, dependencies = TRUE)
-#   sapply(pkg, library, character.only = TRUE)
-# }
-# ipak(packages)
 
 library(flexdashboard)
 library(shiny)
@@ -464,7 +457,7 @@ Other
 Column {.tabset}
 -------------------------------------
 
-### Worldwide COVID-19 spread
+### Worldwide COVID-19 spread 
 
 ```{r}
 library(tidyverse)
@@ -567,15 +560,17 @@ anim <- p +
           subtitle = 'Date {frame_time}') +
   shadow_mark()
 
-animate(anim,
-        nframes = as.numeric(difftime(max(df_plot_anim$date), min(df_plot_anim$date), units = 'days')) + 1,
-        duration = 12,
-        fps = 12,
-        width = 1200,
-        height = 840,
-        start_pause = 5,
-        end_pause = 25,
-        renderer = gifski_renderer())
+gif_file("covid-19.gif")
+
+# animate(anim,
+#         nframes = as.numeric(difftime(max(df_plot_anim$date), min(df_plot_anim$date), units = 'days')) + 1,
+#         duration = 12,
+#         fps = 12,
+#         width = 1200,
+#         height = 840,
+#         start_pause = 5,
+#         end_pause = 25,
+#         renderer = gifski_renderer())
 # anim_save('covid-19.gif')
 
 ```
@@ -583,92 +578,7 @@ animate(anim,
 
 <!-- ### plot -->
 
-```{r}
 
-# # Heatmap plot 1
-# df_plot_1 <- df_prep %>%
-#   mutate(country = factor(country, levels = c(as.character(country_ord_1$country)))) %>%
-#   group_by(country) %>%
-#   mutate(first_date = min(date[value >= 0.03])) %>%
-#   ungroup()
-# 
-# ggplot(df_plot_1, aes(y = country, x = date, fill = value)) +
-#   theme_minimal() +
-#   geom_tile(color = 'white', width = .9, height = .9) +
-#   scale_fill_gradientn(colours = cols, limits = c(0, 1),
-#                        breaks = c(0, 1),
-#                        labels = c('0', 'max'),
-#                        guide = guide_colourbar(ticks = T, nbin = 50, barheight = .5, label = T, barwidth = 10)) +
-#   
-#   geom_text(aes(x = first_date, label = country), size = 3, color = '#797D7F') +
-#   scale_y_discrete(position = 'right') +
-#   coord_equal() +
-#   
-#   theme(legend.position = 'bottom',
-#         legend.direction = 'horizontal',
-#         plot.title = element_text(size = 8, face = 'bold', vjust = 2, hjust = 0.5),
-#         axis.text.x = element_text(size = 8, hjust = .5, vjust = .5, face = 'plain'),
-#         axis.text.y = element_text(size = 6, hjust = .5, vjust = .5, face = 'plain'),
-#         panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank()
-#   ) +
-#   ggtitle('Worldwide COVID-19 spread: new daily cases normalized to location maximum')
-
-
-# Heatmap plot 2
-# df_plot_2 <- df_prep %>%
-#   group_by(country) %>%
-#   filter(date >= min(date[value > 0])) %>%
-#   arrange(date, .by_group = TRUE) %>%
-#   mutate(centr_day = min(row_number()[value == 1]),
-#          n_day = row_number() - centr_day) %>%
-#   ungroup()
-# 
-# country_ord_2 <- df_plot_2 %>%
-#   group_by(country) %>%
-#   filter(date >= min(date[value == 1])) %>%
-#   summarise(value = sum(value)) %>%
-#   ungroup() %>%
-#   arrange(value, country) %>%
-#   distinct(country)
-# 
-# df_plot_2 <- df_plot_2 %>%
-#   mutate(country = factor(country, levels = c(as.character(country_ord_2$country)))) %>%
-#   group_by(country) %>%
-#   mutate(first_date = min(n_day[value >= 0.01])) %>%
-#   ungroup()
-
-```
-
-#### Comparison of different countries
-
-```{r}
-
-# # Heatmap plot 2
-# ggplot(df_plot_2, aes(y = country, x = n_day, fill = value)) +
-#   theme_minimal() +
-#   geom_tile(color = 'white', width = .9, height = .9) +
-#   scale_fill_gradientn(colours = cols, limits = c(0, 1),
-#                        breaks = c(0, 1),
-#                        labels = c('0', 'max'),
-#                        guide = guide_colourbar(ticks = T, nbin = 50, barheight = .5, label = T, barwidth = 10)) +
-#   
-#   geom_text(aes(x = first_date, label = country), size = 3, color = '#797D7F') +
-#   coord_equal() +
-#   
-#   theme(legend.position = 'bottom',
-#         legend.direction = 'horizontal',
-#         plot.title = element_text(size = 8, face = 'bold', vjust = 2, hjust = 0.5),
-#         axis.text.x = element_text(size = 8, hjust = .5, vjust = .5, face = 'plain'),
-#         #axis.text.y = element_text(size = 6, hjust = .5, vjust = .5, face = 'plain'),
-#         axis.text.y = element_blank(),
-#         axis.title.y = element_blank(),
-#         panel.grid.major = element_blank(),
-#         panel.grid.minor = element_blank()
-#   ) +
-#   ggtitle('Comparison of different countries effectiveness against COVID-19 
-#                 (new daily cases normalized to location maximum and data centered on a day with maximum new cases)')
-```
 
 ### plot
 

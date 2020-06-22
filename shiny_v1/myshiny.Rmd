@@ -61,7 +61,7 @@ death_color <- "red"
 
 
 ```{r global, include=FALSE}
-
+getwd()
 raw_data <- read.csv("data/covid_19_data.csv", stringsAsFactors = FALSE)
 # str(raw_data)
 
@@ -94,7 +94,7 @@ new_a = covid_19_data_latest_tot$total_active - covid_19_data_latest_1_tot$total
 
 country_latest <- covid_19_data %>%
   filter(date == Last_update_date)%>%
-  mutate(total_active = confirmed - recovered - deaths)
+  mutate(active = confirmed - recovered - deaths)
 
 date_total <- covid_19_data %>%
   group_by(date) %>%
@@ -167,7 +167,7 @@ flexdashboard::valueBox(prettyNum(covid_19_data_latest_tot$total_recovered, big.
          color = "primary", icon = "fa-stethoscope")
 ```
 
-### `r paste(icon("percent"), "of Deaths Cases :", round(new_d/new_c, digits = 0), "%")`
+### `r paste(icon("percent"), "of Deaths Cases :", round(new_d*100/new_c, digits = 0), "%")`
 
 ```{r}
 flexdashboard::valueBox(prettyNum(covid_19_data_latest_tot$total_deaths, big.mark = ","),
@@ -182,9 +182,9 @@ row { data-height = 200 }
 ```{r}
 # hc_theme_gridlight() hc_theme_economist()  hc_theme_538()
 country_latest %>%
-  arrange(desc(total_confirmed)) %>% 
+  arrange(desc(confirmed)) %>% 
   head(6) %>%
-  hchart("bar",hcaes(x = country_region,  y = total_confirmed )) %>%
+  hchart("bar",hcaes(x = country_region,  y = confirmed )) %>%
   hc_title(text = "Top 10 country of total_confirmed ") %>%
   hc_add_theme(hc_theme_economist())
 
@@ -208,26 +208,26 @@ row { data-height = 300 }
 ### 
 ```{r}
 plot_data1 = country_latest %>%
-  arrange(desc(total_confirmed)) %>% 
+  arrange(desc(confirmed)) %>% 
   head(15)
 
 plotly::plot_ly(data = plot_data1, 
                 x = ~ country_region, 
-                y = ~ log(total_active), 
+                y = ~ log(active), 
                 type = "bar", 
                 name = "Active",
                 marker = list(color = "#1f77b4")) %>%
-  plotly::add_trace(y = ~ log(total_recovered), 
+  plotly::add_trace(y = ~ log(recovered), 
                     name = "Recovered",
                     marker = list(color = "forestgreen")) %>%
-  plotly::add_trace(y = ~ log(total_deaths), 
+  plotly::add_trace(y = ~ log(deaths), 
                     name = "Death",
                     marker = list(color = "red")) %>%
   plotly::layout(title = "",
                  barmode = 'stack',
                  yaxis = list(title = "Total Cases (log scaled)",
                               type = "log"),
-                 xaxis = list(title = "", categoryarray=unique(plot_data1$total_active)),
+                 xaxis = list(title = "", categoryarray=unique(plot_data1$active)),
                  hovermode = "compare",
                  annotations = list(
                    text = "",
@@ -291,14 +291,15 @@ plotly::plot_ly(data = date_total,
 
 ```{r new_cases}
 
-covid_19_data_latest %>%
-  group_by(country_region) %>%
-  summarise(total_cases = sum(confirmed)) %>%
-  arrange(desc(total_cases)) %>% 
+country_latest %>%
+  group_by(country_region)%>%
+  summarise(tot_case = sum(confirmed))%>%
+  mutate(tot_case)%>%
+  arrange(desc(tot_case)) %>% 
   head(10) %>%
   plotly::plot_ly(x = ~ country_region,
-                  y = ~ total_cases,
-                  text = ~ total_cases,
+                  y = ~ tot_case,
+                  text = ~ tot_case,
                   textposition = 'auto',
                   type = "bar") %>%
   plotly::layout(yaxis = list(title = "Number of Cases"),
@@ -320,13 +321,11 @@ Column {data-width=600}
 ### Trajectory Plot - Major Countries 
 
 ```{r}
-covid_19_data_latest %>% 
-  janitor::clean_names() %>% 
+country_latest %>% 
   filter(!country_region %in% 'Others') %>% 
-  group_by(country_region) %>% 
-  summarise(total_confirmed = sum(confirmed)) %>% 
-  filter(total_confirmed > 0) %>% 
-  mutate(log_total_confirmed = log(total_confirmed)) -> countries
+  group_by(country_region)%>%
+  filter(confirmed > 0) %>% 
+  mutate(log_total_confirmed = log(confirmed)) -> countries
 
 highchart() %>%
   hc_add_series_map(worldgeojson, countries, value = 'log_total_confirmed', joinBy = c('name','country_region'))  %>% 
@@ -340,13 +339,11 @@ highchart() %>%
 ### Recovery and Death Rates for Countries with at Least 10000 Cases
 
 ```{r}
-covid_19_data_latest %>% 
-  janitor::clean_names() %>% 
+country_latest %>% 
   filter(!country_region %in% 'Others') %>% 
-  group_by(country_region) %>% 
-  summarise(total_active = sum(total_active)) %>% 
-  filter(total_active > 0) %>% 
-  mutate(log_total_confirmed = log(total_active)) -> countries
+  group_by(country_region)%>%
+  filter(active > 0) %>% 
+  mutate(log_total_confirmed = log(active)) -> countries
 
 highchart() %>%
   hc_add_series_map(worldgeojson, countries, value = 'log_total_confirmed', joinBy = c('name','country_region'))  %>% 

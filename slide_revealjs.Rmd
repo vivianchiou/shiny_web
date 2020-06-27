@@ -1,0 +1,47 @@
+---
+title: "TSDC TEAM A	&#128527;"
+subtitle: "My Pkgs Introduction"
+author: 
+  "組員：邱莉雯、陳冠中"
+date: '`r Sys.Date()`'
+output: revealjs::revealjs_presentation
+---
+
+## Slide with Bullets
+
+
+- TSDC TEAM A Demp Link
+
+- Pkgs For Data Analysis Process & Viz Achievement
+
+- Pkgs For R Slide 
+
+--- 
+
+## OUR DEMO
+
+### [Shiny Apps](https://vivianchiou.shinyapps.io/myshiny)
+
+### [R Slide using flipbooks](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
+
+### [R Slide using revealjs](https://vivianchiou.github.io/shiny_web/slide_revealjs.html)
+
+---
+
+## Slide with R Code and Output
+
+```{r, echo=FALSE}
+pgs <- c('magrittr','tidyverse','ggplot2','gganimate','gifski','plotly',
+         'mefa4','dplyr','gapminder','countrycode','tmap','sp','rworldmap',
+         'flexdashboard','shiny','shinydashboard','leaflet','RColorBrewer',
+         'highcharter','shinyWidgets','spdep','maptools','rgeos','sf','DT')
+pgs
+```
+
+## Slide with Plot
+
+```{r, echo=FALSE}
+pgs <- c('flipbookr', 'xaringan', 'xaringanthemer', 'revealjs')
+pgs
+```
+

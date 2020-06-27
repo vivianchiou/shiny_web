@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>TSDC TEAM A 😏</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="組員：邱莉雯、陳冠中" />
+    <meta name="author" content="業師：Kristen、 劉智欣、林敬凱" />
+    <meta name="date" content="2020-06-27" />
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/hygge.css" rel="stylesheet" />
+    <link href="libs/remark-css/ninjutsu.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# TSDC TEAM A 😏
+## My Covid-19 Dashboard
+### 組員：邱莉雯、陳冠中
+### 業師：Kristen、 劉智欣、林敬凱
+### 2020-06-27
+
+---
+
+
+&lt;!-- setting --&gt;
+
+
+
+
+
+
+&lt;!-- page_1 --&gt;
+
+&lt;!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) --&gt;
+
+
+
+---
+
+class: middle, inverse, center
+
+# Introduction
+
+--
+
+### 1.活動流程
+
+--
+
+### 2.分析步驟
+
+--
+
+###3.成果分享
+
+--
+
+###4.延伸圖型
+
+--
+
+###5.心得與建議
+
+
+---
+&lt;!-- page_2 --&gt;
+
+# 活動流程
+
+- Kaggle 練習與訓練
+
+-	討論專研方向
+
+-	COVID 19 Data Viz on Kaggle
+
+- 欣賞各大網站儀表板、工具
+
+-	創造自己的 COVID 19 Dashboard
+
+
+---
+&lt;!-- page_3 --&gt;
+&lt;!-- page_4  --&gt;
+
+# 分析步驟
+
+- 處理數據數字不一、GIS 處理
+--
+
+- 資料來源
+--
+
+- 工具與套件選擇
+--
+
+- Dashboard 版面配置
+--
+
+- Shiny 效率調整
+
+
+
+---
+class: middle, inverse, center
+
+&lt;!-- page_5  --&gt;
+
+# 成果分享
+
+## [Shiny.io 展示](https://vivianchiou.shinyapps.io/myshiny)
+
+
+## [flipbooks 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
+
+&lt;!-- ## [revealjs 展示](#) --&gt;
+
+---
+&lt;!-- page_6  --&gt;
+## **HOW ?**
+
+```markdown
+`r 
+library(flipbookr)
+library(tidyverse)
+library(xaringan)
+
+`
+``` 
+
+- Create a new R Markdown document from the menu `File -&gt; New File -&gt; R Markdown -&gt; From Template -&gt; select ones  `
+
+--
+
+- Click the `Knit` button to compile it;
+
+
+
+
+
+---
+
+count: false
+ 
+
+.left-panel-base_r_plotting-auto[
+
+```r
+*plot(cars, xlab = "Speed (mph)",
+*    ylab = "Stopping distance (ft)",
+*    las = 1)
+```
+]
+ 
+.right-panel-base_r_plotting-auto[
+&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_1_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-base_r_plotting-auto[
+
+```r
+plot(cars, xlab = "Speed (mph)",  
+     ylab = "Stopping distance (ft)",  
+     las = 1)  
+*lines(lowess(cars$speed, cars$dist,
+*            f = 2/3, iter = 3),
+*     col = "red")
+```
+]
+ 
+.right-panel-base_r_plotting-auto[
+&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_2_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-base_r_plotting-auto[
+
+```r
+plot(cars, xlab = "Speed (mph)",  
+     ylab = "Stopping distance (ft)",  
+     las = 1)  
+lines(lowess(cars$speed, cars$dist,  
+             f = 2/3, iter = 3),  
+      col = "red")  
+*title(main = "the `cars` data")
+```
+]
+ 
+.right-panel-base_r_plotting-auto[
+&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_3_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-base_r_plotting-auto[
+
+```r
+plot(cars, xlab = "Speed (mph)",  
+     ylab = "Stopping distance (ft)",  
+     las = 1)  
+lines(lowess(cars$speed, cars$dist,  
+             f = 2/3, iter = 3),  
+      col = "red")  
+title(main = "the `cars` data")  
+*title(sub = "Data is from Ezekiel's (1930) 'Methods of Correlation Analysis'.")
+```
+]
+ 
+.right-panel-base_r_plotting-auto[
+&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_4_output-1.png" width="80%" /&gt;
+]
+
+&lt;style&gt;
+.left-panel-base_r_plotting-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-base_r_plotting-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-base_r_plotting-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+&lt;!-- page_-2  --&gt;
+
+
+
+
+---
+class: inverse, middle, center
+# 心得與建議
+---
+class: inverse, middle, center
+# 1.
+---
+class: inverse, middle, center
+# 人
+---
+class: inverse, middle, center
+# 不要太貪心
+---
+class: inverse, middle, center
+# 在偷創意的時候
+---
+class: inverse, middle, center
+# 在欣賞別人的Dashboard的時候
+---
+class: inverse, middle, center
+# 總會覺得他的好漂亮、好炫
+---
+class: inverse, middle, center
+# 好!
+---
+class: inverse, middle, center
+# 偷!
+---
+class: inverse, middle, center
+# 好!
+---
+class: inverse, middle, center
+# 學!
+---
+class: inverse, middle, center
+# 看教學文、看範例、記指令、記功能、作筆記、嘗試、自己摸索、除錯
+---
+class: inverse, middle, center
+# 完成!
+---
+class: inverse, middle, center
+# 然後又看到一個更漂亮的...
+---
+class: inverse, middle, center
+# ...
+---
+class: inverse, middle, center
+# 2.方便性 V.S 美觀度
+---
+class: inverse, middle, center
+# 更漂亮
+---
+class: inverse, middle, center
+# 更漂亮-&gt;非預設-&gt;了解套件-&gt;了解延伸套件-&gt;...更多指令-&gt;不同指令...
+---
+class: inverse, middle, center
+# 與眾不同
+---
+class: inverse, middle, center
+# 與眾不同-&gt;非套件-&gt;自定義-&gt;埋css, js...
+---
+class: inverse, middle, center
+# ...
+---
+class: inverse, middle, center
+# 3.經驗分享
+---
+class: inverse, middle, center
+# 想學的、可以玩玩看的、推薦學的、必須學的
+---
+class: inverse, middle, center
+# 太多了!!!!!!!!!!
+---
+class: inverse, middle, center
+# ~誠心建議~
+---
+class: inverse, middle, center
+# 擁有一套自己的在學習新技能的流程
+---
+class: inverse, middle, center
+# 先看範例、先看指令教學、先自己摸索、先看大神的境界、有成就感的小物件、設定時間、設定重要性、評價必須性、學會取捨、維持動力
+
+
+---
+class: middle, inverse, center
+&lt;!-- page_-1  --&gt;
+
+# Slide End !
+--
+
+# Thanks You !
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "20:10",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,182 @@
+---
+title: "TSDC TEAM A	&#128527;"
+subtitle: "My Covid-19 Dashboard"  
+author: 
+  - "組員：邱莉雯、陳冠中"
+  - "業師：Kristen、 劉智欣、林敬凱"
+date: '`r Sys.Date()`'
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    css: ["default", "hygge", "ninjutsu"]
+    nature:
+      ratio: 20:10
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+<!-- setting -->
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
+knitr::opts_chunk$set(fig.height = 6, out.width = "80%", comment = " ", cache = F, dpi = 300)
+```
+
+
+```{r, include = F}
+# This is the recommended set up for flipbooks
+# you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
+library(flipbookr)
+library(tidyverse)
+library(xaringan)
+```
+
+<!-- page_1 -->
+
+<!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) -->
+
+
+
+---
+
+class: middle, inverse, center
+
+# Introduction
+
+--
+
+### 1.活動流程
+
+--
+
+### 2.分析步驟
+
+--
+
+###3.成果分享
+
+--
+
+###4.延伸圖型
+
+--
+
+###5.心得與建議
+
+
+---
+<!-- page_2 -->
+
+# 活動流程
+
+- Kaggle 練習與訓練
+
+-	討論專研方向
+
+-	COVID 19 Data Viz on Kaggle
+
+- 欣賞各大網站儀表板、工具
+
+-	創造自己的 COVID 19 Dashboard
+
+
+---
+<!-- page_3 -->
+<!-- page_4  -->
+
+# 分析步驟
+
+- 處理數據數字不一、GIS 處理
+--
+
+- 資料來源
+--
+
+- 工具與套件選擇
+--
+
+- Dashboard 版面配置
+--
+
+- Shiny 效率調整
+
+
+
+---
+class: middle, inverse, center
+
+<!-- page_5  -->
+
+# 成果分享
+
+## [Shiny.io 展示](https://vivianchiou.shinyapps.io/myshiny)
+
+
+## [flipbooks 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
+
+<!-- ## [revealjs 展示](#) -->
+
+---
+<!-- page_6  -->
+## **HOW ?**
+
+```markdown
+``r "r 
+library(flipbookr)
+library(tidyverse)
+library(xaringan)
+
+"``
+``` 
+
+- Create a new R Markdown document from the menu `File -> New File -> R Markdown -> From Template -> select ones  `
+
+--
+
+- Click the `Knit` button to compile it;
+
+
+
+
+
+---
+
+`r chunk_reveal("base_r_plotting")`
+
+```{r base_r_plotting, include = FALSE}
+plot(cars, xlab = "Speed (mph)", 
+     ylab = "Stopping distance (ft)",
+     las = 1)
+lines(lowess(cars$speed, cars$dist, 
+             f = 2/3, iter = 3), 
+      col = "red")
+title(main = "the `cars` data")
+title(sub = "Data is from Ezekiel's (1930) 'Methods of Correlation Analysis'.")
+```
+
+
+---
+<!-- page_-2  -->
+
+```{r, echo = F}
+philosophy <- 
+"心得與建議|1.|人|不要太貪心|在偷創意的時候|在欣賞別人的Dashboard的時候|總會覺得他的好漂亮、好炫|好!|偷!|好!|學!|看教學文、看範例、記指令、記功能、作筆記、嘗試、自己摸索、除錯|完成!|然後又看到一個更漂亮的...|...|2.方便性 V.S 美觀度|更漂亮|更漂亮->非預設->了解套件->了解延伸套件->...更多指令->不同指令...|與眾不同|與眾不同->非套件->自定義->埋css, js...|...|3.經驗分享|想學的、可以玩玩看的、推薦學的、必須學的|太多了!!!!!!!!!!|~誠心建議~|擁有一套自己的在學習新技能的流程|先看範例、先看指令教學、先自己摸索、先看大神的境界、有成就感的小物件、設定時間、設定重要性、評價必須性、學會取捨、維持動力
+"
+
+```
+
+
+`r text_reveal(text = philosophy, sep = "\\|")`
+
+---
+class: middle, inverse, center
+<!-- page_-1  -->
+
+# Slide End !
+--
+
+# Thanks You !
+
+
+

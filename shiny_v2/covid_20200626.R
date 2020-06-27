@@ -29,24 +29,30 @@ rm(pgs)
 #1========================================================================================
 #< data import >==========================================================================
 df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
-long_lat <- read.csv('C:\\Users\\Taner\\Dropbox\\covid_19\\20200618_get_all_location\\all_area_location.csv')
-tw.map <- sf::st_read(dsn = 'C:\\Users\\Taner\\Dropbox\\covid_19\\20200619_create_ui_server\\TaiwanMap\\COUNTY_MOI_1081121.shp')
+long_lat <- read.csv('all_area_location.csv')
+# long_lat <- read.csv("./shiny_v2/all_area_location.csv") # for local check 
+tw.map <- sf::st_read(dsn = 'TaiwanMap/COUNTY_MOI_1081121.shp')
+# tw.map <- sf::st_read(dsn = './shiny_v2/TaiwanMap/COUNTY_MOI_1081121.shp') # for local check
 taiwan_covid <- read_csv(url('https://data.cdc.gov.tw/zh_TW/download?resourceid=3c1e263d-16ec-4d70-b56c-21c9e2171fc7&dataurl=https://od.cdc.gov.tw/eic/Day_Confirmation_Age_County_Gender_19CoV.csv'),col_names = F,skip = 1)
-#¦U¬w»Ú¤¤¤ß§¤¼Ð
+#å„æ´²éš›ä¸­å¿ƒåæ¨™
 mid_location_data <- data.frame(continent = c('Africa','Americas','Asia','Oceania','Europe'),
                                 lat = c(11.50243, 19.19829,25.20870,-18.31280,51.00000),
                                 lon = c(17.75781,-99.54868,89.23437,138.51560,10.00000))
-#¥xÆW¿¤¥«¤¤­^¹ï·Ó
-city_name_convert_df <- data.frame(city_name_ch = c("¥x¥_¥«", "·s¥_¥«", "®ç¶é¥«", "°ª¶¯¥«",
-                                                    "¥x¤¤¥«", "¹ü¤Æ¿¤", "¥x«n¥«", "«ÌªF¿¤",
-                                                    "·s¦Ë¥«", "·s¦Ë¿¤", "°ò¶©¥«", "¶³ªL¿¤",
-                                                    "¹Å¸q¥«", "­]®ß¿¤", "«n§ë¿¤", "©yÄõ¿¤",
-                                                    "¹Å¸q¿¤"),
+#å°ç£ç¸£å¸‚ä¸­è‹±å°ç…§
+city_name_convert_df <- data.frame(city_name_ch = c("å°åŒ—å¸‚", "æ–°åŒ—å¸‚", "æ¡ƒåœ’å¸‚", "é«˜é›„å¸‚",
+                                                    "å°ä¸­å¸‚", "å½°åŒ–ç¸£", "å°å—å¸‚", "å±æ±ç¸£",
+                                                    "æ–°ç«¹å¸‚", "æ–°ç«¹ç¸£", "åŸºéš†å¸‚", "é›²æž—ç¸£",
+                                                    "å˜‰ç¾©å¸‚", "è‹—æ —ç¸£", "å—æŠ•ç¸£", "å®œè˜­ç¸£",
+                                                    "å˜‰ç¾©ç¸£"),
                                    city_name_eng = c('Taipei City','New Taipei City','Taoyuan City','Kaohsiung City',
                                                      'Taichung City','Changhua County','Tainan City','Pingtung County',
                                                      'Hsinchu City','Hsinchu County','Keelung City','Yunlin County',
                                                      'Chiayi City','Miaoli County','Nantou County','Yilan County',
                                                      'Chiayi County'))
+# load kaggle data
+raw_data <- read.csv("data/covid_19_data.csv", stringsAsFactors = FALSE)
+# raw_data <- read.csv("shiny_v2/data/covid_19_data.csv", stringsAsFactors = FALSE) # local check
+
 #2-1======================================================================================
 #< data clean > - world data =============================================================
 data_date <- df$date %>% unique()
@@ -59,7 +65,7 @@ break_out_num <- as.numeric(Last_update_date - min_date)
 temp_df <- expand.grid(data_date,location)
 names(temp_df) <- c('date','location')
 temp_df <- merge.data.frame(x = temp_df,y = df,by = c('date','location'),all.x = T)
-#«ö¦a°Ï¡B¤é´Á§â¸ê®Æ¸É»ô
+#æŒ‰åœ°å€ã€æ—¥æœŸæŠŠè³‡æ–™è£œé½Š
 temp_df$new_cases[is.na(temp_df$new_cases)] <- 0
 temp_df$new_deaths[is.na(temp_df$new_deaths)] <- 0
 temp_df <- temp_df %>% dplyr::arrange(location,date)
@@ -134,9 +140,11 @@ total_death_top10 <- area_situation_final %>%
 
 total_confirmed_top10$location <- factor(total_confirmed_top10$location,levels = total_confirmed_top10$location[order(total_confirmed_top10$total_cases, decreasing = FALSE)])
 total_death_top10$location <- factor(total_death_top10$location,levels = total_death_top10$location[order(total_death_top10$total_deaths, decreasing = FALSE)])
-#¦ê¦U¦a°Ïªº§¤¼Ð
+#ä¸²å„åœ°å€çš„åæ¨™
 area_situation <- merge.data.frame(x = area_situation,y = long_lat,by = 'location',all.x = T)
 rm(long_lat)
+
+
 #2-2======================================================================================
 #< data clean > - tw data ================================================================
 taiwan_covid <- taiwan_covid[,c(2,3,7)]
@@ -169,66 +177,131 @@ test_df[['color']] <- ifelse(test_df$total_case == 0,"#EEEEEE",
                                            ifelse(test_df$total_case < 100,"#D6604D",
                                                   ifelse(test_df$total_case < 200,"#B2182B","#8B0000")))))
 test_df <- st_sf(test_df)
+
+#2-3======================================================================================
+#< data clean > - kaggle data ================================================================
+covid_19_data <- raw_data %>% janitor::clean_names() %>%
+  mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"),
+         location = raw_data$Country.Region)
+rm(raw_data)
+covid_19_data_latest_tot <- covid_19_data %>%
+  filter(date == Last_update_date)%>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+covid_19_data_latest_1_tot <- covid_19_data %>%
+  filter(date == Last_update_date-1)%>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+new_c = covid_19_data_latest_tot$total_confirmed - covid_19_data_latest_1_tot$total_confirmed
+new_r = covid_19_data_latest_tot$total_recovered - covid_19_data_latest_1_tot$total_recovered
+new_d = covid_19_data_latest_tot$total_deaths - covid_19_data_latest_1_tot$total_deaths
+new_a = covid_19_data_latest_tot$total_active - covid_19_data_latest_1_tot$total_active
+
+country_latest <- covid_19_data %>%
+  filter(date == Last_update_date)%>%
+  mutate(active = confirmed - recovered - deaths)
+
+date_total <- covid_19_data %>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+date_list = covid_19_data$date %>% unique()
+country_list = covid_19_data$country_region %>% unique()
+
 #3========================================================================================
 #< ui >===================================================================================
 ui <- navbarPage(title = "Covid-19 dashboard!",
-                           header = tagList(
-                             useShinydashboard()
-                           ),
-                tabPanel(title = tags$p(icon('globe'),'Global Situation'),setBackgroundColor("#808080"),
-                         fluidRow(
-                           #box1:top area
+                 header = tagList(
+                   useShinydashboard()
+                 ),
+                 tabPanel(title = tags$p(icon('globe'),'Global Situation'),setBackgroundColor("#808080"),
+                          fluidRow(
+                            #box1:top area
                             box(
-                               width = 12,
-                               valueBoxOutput(outputId = 'update_date',width = 3),
-                               valueBoxOutput(outputId = 'confirmed_cases',width = 3),
-                               valueBoxOutput(outputId = 'deaths',width = 3),
-                               valueBoxOutput(outputId = 'c',width = 3)
-                             ),
+                              width = 12,
+                              valueBoxOutput(outputId = 'update_date',width = 3),
+                              valueBoxOutput(outputId = 'confirmed_cases',width = 3),
+                              valueBoxOutput(outputId = 'deaths',width = 3),
+                              valueBoxOutput(outputId = 'c',width = 3)
+                            ),
                             #box2:left
-                             box(title = 'TREND',width = 6,
-                                 plotlyOutput(outputId = 'global_line_chart')
-                             ),
+                            box(title = 'TREND',width = 6,
+                                plotlyOutput(outputId = 'global_line_chart')
+                            ),
                             #box3:right
-                             box(title = 'TOP 10 AREA',width = 6,
-                                 tabsetPanel(type = 'tabs',
-                                             tabPanel(title = 'Cumulated Comfirmed',
-                                                      plotlyOutput(outputId = 'global_bar_chart_confirmed')),
-                                             tabPanel(title = 'Cumulated Deaths',
-                                                      plotlyOutput(outputId = 'global_bar_chart_deaths')))
-                                 )
-                             )
-                           ),
-                navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
-                           tabPanel(title = 'Global',setBackgroundColor("#808080")),
-                           tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
-                
-                navbarMenu(title = tags$p(icon('map'),'Map'),
-                           tabPanel(title = 'Global',setBackgroundColor("#808080"),
-                                    sidebarPanel(width = 2,
-                                                 h1('World Map'),
-                                                 dateInput(inputId = "obs_day",label = "Date:",
-                                                           min = min_date,
-                                                           max = Last_update_date,
-                                                           value = Last_update_date),
-                                                 selectInput(inputId = "continent",
-                                                             label = "Continent:",
-                                                             choices = c('All','Africa','Americas','Asia','Oceania','Europe'),
-                                                             selected = 'All'),
-                                                 checkboxInput('legend', 'Legend', value = FALSE, width = NULL),
-                                                 h4('hey! in here can select date and continent.'),
-                                                 h4('Then it will show the bubble plot in right side.')),
-                                    box(width = 10,
-                                      leafletOutput(outputId = "global_map",width = "100%", height = "500px")
-                                      ),
-                                    box(width = 6,plotlyOutput(outputId = 'area_line_chart')),
-                                    box(width = 6,plotlyOutput(outputId = 'area_bar_chart'))
-                                    ),
-                           tabPanel(title = 'Taiwan',setBackgroundColor("#808080"),
-                                    box(width = 6,leafletOutput(outputId = "taiwan_map",width = "100%"))
-                                    )
-                           )
-                )
+                            box(title = 'TOP 10 AREA',width = 6,
+                                tabsetPanel(type = 'tabs',
+                                            tabPanel(title = 'Cumulated Comfirmed',
+                                                     plotlyOutput(outputId = 'global_bar_chart_confirmed')),
+                                            tabPanel(title = 'Cumulated Deaths',
+                                                     plotlyOutput(outputId = 'global_bar_chart_deaths')))
+                            )
+                          )
+                 ),
+                 navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
+                            tabPanel(title = 'Global',setBackgroundColor("#808080")),
+                            tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
+                 
+                 navbarMenu(title = tags$p(icon('map'),'Map'),
+                            tabPanel(title = 'Global',setBackgroundColor("#808080"),
+                                     sidebarPanel(width = 2,
+                                                  h1('World Map'),
+                                                  dateInput(inputId = "obs_day",label = "Date:",
+                                                            min = min_date,
+                                                            max = Last_update_date,
+                                                            value = Last_update_date),
+                                                  selectInput(inputId = "continent",
+                                                              label = "Continent:",
+                                                              choices = c('All','Africa','Americas','Asia','Oceania','Europe'),
+                                                              selected = 'All'),
+                                                  checkboxInput('legend', 'Legend', value = FALSE, width = NULL),
+                                                  h4('hey! in here can select date and continent.'),
+                                                  h4('Then it will show the bubble plot in right side.')),
+                                     box(width = 10,
+                                         leafletOutput(outputId = "global_map",width = "100%", height = "500px")
+                                     ),
+                                     box(width = 6,plotlyOutput(outputId = 'area_line_chart')),
+                                     box(width = 6,plotlyOutput(outputId = 'area_bar_chart'))
+                            ),
+                            tabPanel(title = 'Taiwan',setBackgroundColor("#808080"),
+                                     box(width = 6,leafletOutput(outputId = "taiwan_map",width = "100%"))
+                            )
+                 ),
+                 
+                 tabPanel(title = tags$p(icon('data'),'data'),
+                          setBackgroundColor("#1f77b4"),
+                          sidebarPanel(width = 12,
+                                       height = 2,
+                                       title = 'data_intro',
+                                       radioButtons(inputId = 'data_type',
+                                                    label = 'Select Data : ',
+                                                    choices = c("url_data","kaggle_data"),
+                                                    
+                                       ),
+                                       dateInput(inputId = 'start_date',
+                                                 label = 'Date Start:',
+                                                 value = as.character(Sys.Date())
+                                       ),
+                                       selectInput("Country", "Select Country/Region:",
+                                                   choices = NULL)
+                          ),   
+                          box(width = 12, height = 100,
+                              DTOutput('intro_data')
+                          )
+                          
+                 )
+)
 #shinyApp(ui,server)
 #4========================================================================================
 #< server >===============================================================================
@@ -285,10 +358,10 @@ server <- function(input, output, session) {
   output$global_map <- renderLeaflet({
     if (input$continent == 'All'){
       fig %>% setView(lng = 120,lat = 0,zoom = 1.5)
-      }else{
-        fig %>% setView(lng = center_city()$lng,lat = center_city()$lat,zoom = 3)
-      }
-    })
+    }else{
+      fig %>% setView(lng = center_city()$lng,lat = center_city()$lat,zoom = 3)
+    }
+  })
   
   mybins <- c(0,10,100,1000,10000,100000,1000000, Inf)
   colorpal <- colorNumeric('YlOrRd',mybins[1:7])
@@ -360,19 +433,19 @@ server <- function(input, output, session) {
         dplyr::select(location,total_cases)
       inner_data$location <- factor(inner_data$location,levels = inner_data$location[order(inner_data$total_cases)])
       inner_data
-      }else{
-        inner_data <- area_situation %>% filter(date == input$obs_day) %>% 
-          dplyr::arrange(-total_cases) %>% head(10) %>%
-          dplyr::select(location,total_cases)
-        inner_data$location <- factor(inner_data$location,levels = inner_data$location[order(inner_data$total_cases)])}
+    }else{
+      inner_data <- area_situation %>% filter(date == input$obs_day) %>% 
+        dplyr::arrange(-total_cases) %>% head(10) %>%
+        dplyr::select(location,total_cases)
+      inner_data$location <- factor(inner_data$location,levels = inner_data$location[order(inner_data$total_cases)])}
     inner_data
-    })
+  })
   output$area_bar_chart <- renderPlotly({
-      plot_ly(data = filteredData3(),x = ~total_cases, y = ~location, type = 'bar',hoverinfo = 'text',
-              text = ~paste('</br> Area: ', location,
-                            '</br> Confirmed Cases: ', prettyNum(total_cases, big.mark = ",")),
-              marker = list(color = 'rgba(222,45,38,0.8)'))
-    })
+    plot_ly(data = filteredData3(),x = ~total_cases, y = ~location, type = 'bar',hoverinfo = 'text',
+            text = ~paste('</br> Area: ', location,
+                          '</br> Confirmed Cases: ', prettyNum(total_cases, big.mark = ",")),
+            marker = list(color = 'rgba(222,45,38,0.8)'))
+  })
   
   
   mytext <- paste(
@@ -422,6 +495,27 @@ server <- function(input, output, session) {
     print(click)
   })
   #print(click)
+  filteredData4 <- reactive({
+    data <- 
+      if (input$data_type=="url_data") {
+        data <- df
+        data[data$date >= input$start_date,]
+      }else{
+        data <- covid_19_data
+        data[data$date >= input$start_date,]
+      }
+  })
+  observeEvent(filteredData4(), {
+    updateSelectInput(session, "Country", choices = unique(filteredData4()$location))
+  })
+  
+  output$intro_data <- DT::renderDataTable({
+    dt = filteredData4()%>%
+      filter(location == input$Country)
+    DT::datatable(dt, options = list(
+      pageLength = 25
+    ))
+  })
 }
 shinyApp(ui,server)
 

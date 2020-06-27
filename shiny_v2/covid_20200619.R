@@ -22,6 +22,35 @@ library(leaflet)
 library(RColorBrewer)
 library(highcharter)
 library(shinyWidgets)
+###
+# library(flexdashboard)
+library(shiny)
+# library(leaflet)
+# library(RColorBrewer)
+library(rtweet)
+# library(rmarkdown)
+library(styler)
+# library(revealjs)
+# library(htmlwidgets)
+library(digest)
+library(bit)
+# library(ggplot2)
+library(rlist)
+# library(knitr)
+library(evaluate)
+library(leafpop)
+library(widgetframe)
+library(data.table)
+library(dplyr)
+library(highcharter)
+library(janitor)
+library(htmltools)
+library(DT)
+library(plotly)
+library(leaflet.extras)
+library(leafpop)
+library(purrr)
+library(stringi)
 
 coords2continent = function(points){  
   countriesSP <- getMap(resolution='low')
@@ -133,7 +162,9 @@ total_death_top10 <- area_situation_final %>%
 total_confirmed_top10$location <- factor(total_confirmed_top10$location,levels = total_confirmed_top10$location[order(total_confirmed_top10$total_cases, decreasing = FALSE)])
 total_death_top10$location <- factor(total_death_top10$location,levels = total_death_top10$location[order(total_death_top10$total_deaths, decreasing = FALSE)])
 #???U?a?Ϫ?????
-long_lat <- read.csv('all_area_location.csv')
+
+long_lat <- read.csv("all_area_location.csv")
+# long_lat <- read.csv("./shiny_v2/all_area_location.csv")
 area_situation <- merge.data.frame(x = area_situation,y = long_lat,by = 'location',all.x = T)
 rm(long_lat)
 #?U?w?ڤ??ߧ???
@@ -143,6 +174,58 @@ mid_location_data <- data.frame(continent = c('Africa','Americas',
                                         25.20870,-18.31280,51.00000),
                                 lon = c(17.75781,-99.54868,
                                         89.23437,138.51560,10.00000))
+
+### load kaggle data ####
+raw_data <- read.csv("data/covid_19_data.csv", stringsAsFactors = FALSE)
+raw_data$location = raw_data$Country.Region
+# raw_data <- read.csv("shiny_v2/data/covid_19_data.csv", stringsAsFactors = FALSE) # local check
+# str(raw_data)
+
+covid_19_data <- raw_data %>% janitor::clean_names() %>%
+  mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"))
+# str(covid_19_data)
+
+covid_19_data_latest_tot <- covid_19_data %>%
+  filter(date == Last_update_date)%>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+covid_19_data_latest_1_tot <- covid_19_data %>%
+  filter(date == Last_update_date-1)%>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+new_c = covid_19_data_latest_tot$total_confirmed - covid_19_data_latest_1_tot$total_confirmed
+new_r = covid_19_data_latest_tot$total_recovered - covid_19_data_latest_1_tot$total_recovered
+new_d = covid_19_data_latest_tot$total_deaths - covid_19_data_latest_1_tot$total_deaths
+new_a = covid_19_data_latest_tot$total_active - covid_19_data_latest_1_tot$total_active
+
+country_latest <- covid_19_data %>%
+  filter(date == Last_update_date)%>%
+  mutate(active = confirmed - recovered - deaths)
+
+date_total <- covid_19_data %>%
+  group_by(date) %>%
+  summarise(total_confirmed = sum(confirmed),
+            total_recovered = sum(recovered),
+            total_deaths = sum(deaths))%>%
+  mutate(total_active = total_confirmed - total_recovered - total_deaths)
+
+date_list = covid_19_data$date %>% unique()
+country_list = covid_19_data$country_region %>% unique()
+
+
+# # kaggle data clean
+# covid_19_data <- raw_data %>% janitor::clean_names() %>%
+#   mutate(date = as.Date(raw_data$ObservationDate, format = "%m/%d/%y"),
+#          location = raw_data$Country.Region)
+
 #2===========================================================
 #<ui>========================================================
 
@@ -152,7 +235,8 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                            ),
                  
                  
-                tabPanel(title = tags$p(icon('globe'),'Global Situation'),setBackgroundColor("#808080"),
+                tabPanel(title = tags$p(icon('globe'),'Global Situation'),
+                                  setBackgroundColor("#1f77b4"),
                          fluidRow(
                            #box1:top area
                             box(
@@ -177,7 +261,7 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                              )
                            ),
                 navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
-                           tabPanel(title = 'Global',setBackgroundColor("#808080")),
+                           tabPanel(title = 'Global',setBackgroundColor("red")),
                            tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
                 
                 navbarMenu(title = tags$p(icon('map'),'Map'),
@@ -201,8 +285,32 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                                     box(width = 6,plotlyOutput(outputId = 'area_line_chart')),
                                     box(width = 6,plotlyOutput(outputId = 'area_bar_chart'))
                                     ),
-                           tabPanel(title = 'Taiwan',setBackgroundColor("#808080")))
-                )
+                           tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
+                
+                tabPanel(title = tags$p(icon('data'),'data'),
+                                  setBackgroundColor("#1f77b4"),
+                         sidebarPanel(width = 12,
+                                      height = 2,
+                                          title = 'data_intro',
+                                          radioButtons(inputId = 'data_type',
+                                                       label = 'Select Data : ',
+                                                       choices = c("url_data","kaggle_data"),
+
+                                          ),
+                                          dateInput(inputId = 'start_date',
+                                                    label = 'Date Start:',
+                                                    value = as.character(Sys.Date())
+                                          ),
+                                          selectInput("Country", "Select Country/Region:",
+                                                      choices = NULL)
+                          ),   
+                          box(width = 12, height = 100,
+                              DTOutput('intro_data')
+                          )
+                                                           
+                 )
+                
+) 
 
 #3===========================================================
 #<server>====================================================
@@ -347,6 +455,31 @@ server <- function(input, output, session) {
                             '</br> Confirmed Cases: ', prettyNum(total_cases, big.mark = ",")),
               marker = list(color = 'rgba(222,45,38,0.8)'))
     })
+  
+
+  
+  filteredData4 <- reactive({
+    data <- 
+      if (input$data_type=="url_data") {
+        data <- df
+        data[data$date >= input$start_date,]
+      }else{
+        data <- covid_19_data
+        data[data$date >= input$start_date,]
+      }
+  })
+  observeEvent(filteredData4(), {
+    updateSelectInput(session, "Country", choices = unique(filteredData4()$location))
+  })
+
+  output$intro_data <- DT::renderDataTable({
+    dt = filteredData4()%>%
+      filter(location == input$Country)
+    DT::datatable(dt, options = list(
+      pageLength = 25
+    ))
+  })
+  
 }
 shinyApp(ui,server)
 

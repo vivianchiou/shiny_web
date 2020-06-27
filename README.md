@@ -5,7 +5,7 @@
 - ## [**Shiny.io 展示**](https://vivianchiou.shinyapps.io/myshiny)
 
 
-- ## [**Slide flipbookr 展示**]((https://vivianchiou.github.io/shiny_web/slide_flipbookr.html))
+- ## [**Slide flipbookr 展示**](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
   
 
 - ## [**Slide revealjs 展示**](https://vivianchiou.github.io/shiny_web/slide_revealjs.html)

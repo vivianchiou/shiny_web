@@ -118,7 +118,7 @@ for (string in location){
   }
 }
 
-rm(df)
+#rm(df)
 rm(index_evctor,i,string,input_index,is_location)
 rm(total_cases_is_na,total_cases_na_index,total_cases_not_na_index)
 rm(total_deaths_is_na,total_deaths_na_index,total_deaths_not_na_index)

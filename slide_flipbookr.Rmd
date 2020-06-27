@@ -27,10 +27,13 @@ knitr::opts_chunk$set(fig.height = 6, out.width = "80%", comment = " ", cache = 
 library(xaringanthemer)
 style_duo_accent(
   header_color = "#26c7b9", #hex
-  primary_color = "#eb6e15",
-  secondary_color = "#1381B0",
+  primary_color = "#26c7b9",
+  #primary_color = "#eb6e15",
+  #secondary_color = "#1381B0",
   inverse_header_color = "#FFFFFF",
-  link_color = "#f7da88"
+  link_color = "#f7da88",
+  text_color = "#FFFFFF",
+  background_color = '#424242'
   # text_font_base = ""
   
 )
@@ -79,6 +82,7 @@ class: middle, inverse, center
 
 
 ---
+
 <!-- page_2 -->
 
 # 活動流程
@@ -152,23 +156,25 @@ library(xaringan)
 - Click the `Knit` button to compile it;
 
 ---
-
 # Tables
 
 If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
 
-```{r}
-knitr::kable(head(df), format = 'html')
+```{r }
+names(df) <- kableExtra::cell_spec(names(df),color = '#000000')
+knitr::kable(head(df),format = 'html',escape = FALSE) %>%
+  kableExtra::row_spec(1:6, bold = T, color = "#000000", background = "#d1d1d1")
+
+
 ```
-
-
 
 ---
 <!-- try -->
 
 ```{r out.width='100%',  fig.height=4, eval=require('leaflet')}
 library(leaflet)
-leaflet() %>% addTiles()%>% setView(lng = 121, lat = 21, zoom = 7.5)
+leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) %>%
+  addTiles()%>% setView(lng = 121, lat = 21, zoom = 7)
 # leaflet() %>% addTiles()%>% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
 

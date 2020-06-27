@@ -5,7 +5,8 @@
     <meta charset="utf-8" />
     <meta name="author" content="組員：邱莉雯、陳冠中" />
     <meta name="author" content="業師：Kristen、 劉智欣、林敬凱" />
-    <meta name="date" content="2020-06-27" />
+    <meta name="date" content="2020-06-28" />
+    <script src="libs/kePrint/kePrint.js"></script>
     <script src="libs/htmlwidgets/htmlwidgets.js"></script>
     <script src="libs/jquery/jquery.min.js"></script>
     <link href="libs/leaflet/leaflet.css" rel="stylesheet" />
@@ -25,7 +26,7 @@ class: center, middle, inverse, title-slide
 ## My Covid-19 Dashboard
 ### 組員：邱莉雯、陳冠中
 ### 業師：Kristen、 劉智欣、林敬凱
-### 2020-06-27
+### 2020-06-28
 
 ---
 
@@ -67,6 +68,7 @@ class: middle, inverse, center
 
 
 ---
+
 &lt;!-- page_2 --&gt;
 
 # 活動流程
@@ -140,80 +142,79 @@ library(xaringan)
 - Click the `Knit` button to compile it;
 
 ---
-
 # Tables
 
 If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
 
 
 ```r
-knitr::kable(head(df), format = 'html')
+names(df) &lt;- kableExtra::cell_spec(names(df),color = '#000000')
+knitr::kable(head(df),format = 'html',escape = FALSE) %&gt;%
+  kableExtra::row_spec(1:6, bold = T, color = "#000000", background = "#d1d1d1")
 ```
 
 &lt;table&gt;
  &lt;thead&gt;
   &lt;tr&gt;
-   &lt;th style="text-align:left;"&gt; date &lt;/th&gt;
-   &lt;th style="text-align:left;"&gt; location &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; new_cases &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; new_deaths &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; total_cases &lt;/th&gt;
-   &lt;th style="text-align:right;"&gt; total_deaths &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     color: #000000 !important;"&gt;date&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; &lt;span style="     color: #000000 !important;"&gt;location&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; &lt;span style="     color: #000000 !important;"&gt;new_cases&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; &lt;span style="     color: #000000 !important;"&gt;new_deaths&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; &lt;span style="     color: #000000 !important;"&gt;total_cases&lt;/span&gt; &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; &lt;span style="     color: #000000 !important;"&gt;total_deaths&lt;/span&gt; &lt;/th&gt;
   &lt;/tr&gt;
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2019-12-31 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2019-12-31 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2020-01-01 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2020-01-01 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2020-01-02 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2020-01-02 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2020-01-03 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2020-01-03 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2020-01-04 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2020-01-04 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; 2020-01-05 &lt;/td&gt;
-   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 2020-01-05 &lt;/td&gt;
+   &lt;td style="text-align:left;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;font-weight: bold;color: #000000 !important;background-color: #d1d1d1 !important;"&gt; 0 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
-
 
 ---
 &lt;!-- try --&gt;
@@ -221,11 +222,12 @@ knitr::kable(head(df), format = 'html')
 
 ```r
 library(leaflet)
-leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7.5)
+leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) %&gt;%
+  addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7)
 ```
 
-<div id="htmlwidget-316edc8a3a8a57b19112" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-316edc8a3a8a57b19112">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7.5,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-09d3dab12ffd0b2dbc9c" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-09d3dab12ffd0b2dbc9c">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
 # leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)

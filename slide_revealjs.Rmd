@@ -24,7 +24,8 @@ output: revealjs::revealjs_presentation
 
 ### [R Slide using flipbooks](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
 
-### [R Slide using revealjs](https://vivianchiou.github.io/shiny_web/slide_revealjs.html)
+### [R Slide using revealjs](#)
+<!-- ### [R Slide using revealjs](https://vivianchiou.github.io/shiny_web/slide_revealjs.html) -->
 
 ---
 

@@ -113,9 +113,11 @@ class: middle, inverse, center
 ## [Shiny.io 展示](https://vivianchiou.shinyapps.io/myshiny)
 
 
-## [flipbooks 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
+## [flipbookr 展示](#)
+<!-- ## [flipbookr 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html) -->
 
-<!-- ## [revealjs 展示](#) -->
+## [revealjs 展示](https://vivianchiou.github.io/shiny_web/slide_revealjs.html)
+
 
 ---
 <!-- page_6  -->

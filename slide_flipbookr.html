@@ -6,9 +6,16 @@
     <meta name="author" content="組員：邱莉雯、陳冠中" />
     <meta name="author" content="業師：Kristen、 劉智欣、林敬凱" />
     <meta name="date" content="2020-06-27" />
-    <link href="libs/remark-css/default.css" rel="stylesheet" />
-    <link href="libs/remark-css/hygge.css" rel="stylesheet" />
-    <link href="libs/remark-css/ninjutsu.css" rel="stylesheet" />
+    <script src="libs/htmlwidgets/htmlwidgets.js"></script>
+    <script src="libs/jquery/jquery.min.js"></script>
+    <link href="libs/leaflet/leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet/leaflet.js"></script>
+    <link href="libs/leafletfix/leafletfix.css" rel="stylesheet" />
+    <script src="libs/Proj4Leaflet/proj4-compressed.js"></script>
+    <script src="libs/Proj4Leaflet/proj4leaflet.js"></script>
+    <link href="libs/rstudio_leaflet/rstudio_leaflet.css" rel="stylesheet" />
+    <script src="libs/leaflet-binding/leaflet.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -29,10 +36,6 @@ class: center, middle, inverse, title-slide
 
 
 
-
-&lt;!-- page_1 --&gt;
-
-&lt;!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) --&gt;
 
 
 
@@ -111,9 +114,11 @@ class: middle, inverse, center
 ## [Shiny.io 展示](https://vivianchiou.shinyapps.io/myshiny)
 
 
-## [flipbooks 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html)
+## [flipbookr 展示](#)
+&lt;!-- ## [flipbookr 展示](https://vivianchiou.github.io/shiny_web/slide_flipbookr.html) --&gt;
 
-&lt;!-- ## [revealjs 展示](#) --&gt;
+## [revealjs 展示](https://vivianchiou.github.io/shiny_web/slide_revealjs.html)
+
 
 ---
 &lt;!-- page_6  --&gt;
@@ -134,120 +139,103 @@ library(xaringan)
 
 - Click the `Knit` button to compile it;
 
-
-
-
-
 ---
 
-count: false
- 
+# Tables
 
-.left-panel-base_r_plotting-auto[
+If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
+
 
 ```r
-*plot(cars, xlab = "Speed (mph)",
-*    ylab = "Stopping distance (ft)",
-*    las = 1)
+knitr::kable(head(df), format = 'html')
 ```
-]
- 
-.right-panel-base_r_plotting-auto[
-&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_1_output-1.png" width="80%" /&gt;
-]
+
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; date &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; location &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; new_cases &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; new_deaths &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; total_cases &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; total_deaths &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2019-12-31 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-01 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-02 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-03 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-04 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; 2020-01-05 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Afghanistan &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+
+
 
 ---
-count: false
- 
+&lt;!-- try --&gt;
 
-.left-panel-base_r_plotting-auto[
 
 ```r
-plot(cars, xlab = "Speed (mph)",  
-     ylab = "Stopping distance (ft)",  
-     las = 1)  
-*lines(lowess(cars$speed, cars$dist,
-*            f = 2/3, iter = 3),
-*     col = "red")
+library(leaflet)
+leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7.5)
 ```
-]
- 
-.right-panel-base_r_plotting-auto[
-&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_2_output-1.png" width="80%" /&gt;
-]
 
----
-count: false
- 
-
-.left-panel-base_r_plotting-auto[
+<div id="htmlwidget-316edc8a3a8a57b19112" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-316edc8a3a8a57b19112">{"x":{"options":{"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}}},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7.5,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
-plot(cars, xlab = "Speed (mph)",  
-     ylab = "Stopping distance (ft)",  
-     las = 1)  
-lines(lowess(cars$speed, cars$dist,  
-             f = 2/3, iter = 3),  
-      col = "red")  
-*title(main = "the `cars` data")
+# leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
-]
- 
-.right-panel-base_r_plotting-auto[
-&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_3_output-1.png" width="80%" /&gt;
-]
 
 ---
-count: false
- 
-
-.left-panel-base_r_plotting-auto[
-
-```r
-plot(cars, xlab = "Speed (mph)",  
-     ylab = "Stopping distance (ft)",  
-     las = 1)  
-lines(lowess(cars$speed, cars$dist,  
-             f = 2/3, iter = 3),  
-      col = "red")  
-title(main = "the `cars` data")  
-*title(sub = "Data is from Ezekiel's (1930) 'Methods of Correlation Analysis'.")
-```
-]
- 
-.right-panel-base_r_plotting-auto[
-&lt;img src="slide_flipbookr_files/figure-html/base_r_plotting_auto_4_output-1.png" width="80%" /&gt;
-]
-
-&lt;style&gt;
-.left-panel-base_r_plotting-auto {
-  color: #777;
-  width: 38.6138613861386%;
-  height: 92%;
-  float: left;
-  font-size: 80%
-}
-.right-panel-base_r_plotting-auto {
-  width: 59.4059405940594%;
-  float: right;
-  padding-left: 1%;
-  font-size: 80%
-}
-.middle-panel-base_r_plotting-auto {
-  width: 0%;
-  float: left;
-  padding-left: 1%;
-  font-size: 80%
-}
-&lt;/style&gt;
 
 
 
 
-
-
----
-&lt;!-- page_-2  --&gt;
 
 
 

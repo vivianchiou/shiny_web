@@ -8,7 +8,7 @@ date: '`r Sys.Date()`'
 output:
   xaringan::moon_reader:
     lib_dir: libs
-    css: ["default", "hygge", "ninjutsu"]
+    css: xaringan-themer.css
     nature:
       ratio: 20:10
       highlightLines: true
@@ -23,19 +23,32 @@ knitr::opts_chunk$set(echo = TRUE, warning = F, message = F)
 knitr::opts_chunk$set(fig.height = 6, out.width = "80%", comment = " ", cache = F, dpi = 300)
 ```
 
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  header_color = "#26c7b9", #hex
+  primary_color = "#eb6e15",
+  secondary_color = "#1381B0",
+  inverse_header_color = "#FFFFFF",
+  link_color = "#f7da88"
+  # text_font_base = ""
+  
+)
+```
 
 ```{r, include = F}
 # This is the recommended set up for flipbooks
 # you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
 library(flipbookr)
 library(tidyverse)
-library(xaringan)
+# library(xaringan)
+library(gganimate)
+library(gifski)
+library(ggplot2)
+# 
+
+df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
 ```
-
-<!-- page_1 -->
-
-<!-- background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg) -->
-
 
 
 ---
@@ -138,28 +151,32 @@ library(xaringan)
 
 - Click the `Knit` button to compile it;
 
-
-
-
-
 ---
 
-`r chunk_reveal("base_r_plotting")`
+# Tables
 
-```{r base_r_plotting, include = FALSE}
-plot(cars, xlab = "Speed (mph)", 
-     ylab = "Stopping distance (ft)",
-     las = 1)
-lines(lowess(cars$speed, cars$dist, 
-             f = 2/3, iter = 3), 
-      col = "red")
-title(main = "the `cars` data")
-title(sub = "Data is from Ezekiel's (1930) 'Methods of Correlation Analysis'.")
+If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
+
+```{r}
+knitr::kable(head(df), format = 'html')
 ```
 
 
+
 ---
-<!-- page_-2  -->
+<!-- try -->
+
+```{r out.width='100%',  fig.height=4, eval=require('leaflet')}
+library(leaflet)
+leaflet() %>% addTiles()%>% setView(lng = 121, lat = 21, zoom = 7.5)
+# leaflet() %>% addTiles()%>% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
+```
+
+---
+
+
+
+
 
 ```{r, echo = F}
 philosophy <- 

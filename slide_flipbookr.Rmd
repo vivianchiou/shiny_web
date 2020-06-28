@@ -17,7 +17,28 @@ output:
 
 class: center, middle
 
-# xaringan
+# Introduction
+
+--
+
+### 1.活動流程
+
+--
+
+### 2.分析步驟
+
+--
+
+###3.成果分享
+
+--
+
+###4.延伸圖型
+
+--
+
+###5.心得與建議
+---
 
 <!-- setting -->
 
@@ -54,7 +75,7 @@ library(ggplot2)
 
 ```
 
-class: middle, center, inverse
+
 
 # Hi!
 
@@ -161,6 +182,7 @@ ranked_by_date[ranked_by_date$location=="United States",]$location= "US"
 ---
 
 ```{r}
+extrafont::loadfonts(device="win")
 my_theme <- theme_classic(base_family = "Times") +
   theme(axis.text.y = element_blank()) +
   theme(axis.ticks.y = element_blank()) +
@@ -273,7 +295,7 @@ background-image: url("fpb_p1.png")
 
 ---
 
-```{r fig.height=1, out.width='50%', out.height="50%", fig.align='center'}
+```{r fig.height=1, out.height="80%", fig.align='center'}
 gif_file("./covid_gganimation/barchart2.gif")
 ```
 
@@ -283,7 +305,6 @@ gif_file("./covid_gganimation/barchart2.gif")
 gif_file("./covid_gganimation/cov.gif")
 ```
 
----
 
 ```{r, echo = F}
 philosophy <- 
@@ -292,6 +313,25 @@ philosophy <-
 
 ```
 `r text_reveal(text = philosophy, sep = "\\|")`
+
+
+
+---
+class: middle, inverse, center
+
+# 使用github：版本控制
+
+--
+
+### 1.當雲端使用可以 下載/上傳 最新修改完的版本
+
+
+### 2.從歷史紀錄可以知道不同版本間的差別
+
+
+### 3.不同人在上傳新版本的時候可以加一些留言訊息說明此版本新增/刪減了甚麼內容
+
+
 
 ---
 class: middle, inverse, center

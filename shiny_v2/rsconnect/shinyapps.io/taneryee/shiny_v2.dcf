@@ -1,0 +1,13 @@
+name: shiny_v2
+title: shiny_v2
+username:
+account: taneryee
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2514134
+bundleId: 3326234
+url: https://taneryee.shinyapps.io/shiny_v2/
+when: 1593363324.19692
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: covid_20200626.R|old/app.R|old/covid_20200619.R

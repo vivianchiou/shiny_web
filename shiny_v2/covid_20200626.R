@@ -76,19 +76,13 @@ total_deaths_is_na <- temp_df[["total_deaths"]] %>% is.na()
 
 for (string in location){
   is_location <- (temp_df[["location"]] == string)
-  
   total_cases_na_index <- which(total_cases_is_na & is_location)
   total_cases_not_na_index <- which((!total_cases_is_na) & is_location)
-  
   for (i in total_cases_na_index){
-    
     index_evctor <- which(total_cases_not_na_index < i)
-    
     if (length(index_evctor) > 0){
-      
       input_index <- max(index_evctor)
       input_index <- total_cases_not_na_index[input_index]
-      
       temp_df[['total_cases']][i] <- temp_df[['total_cases']][input_index] + temp_df[["new_cases"]][input_index+1]
     }else{
       temp_df[['total_cases']][i] <- 0
@@ -98,19 +92,13 @@ for (string in location){
 
 for (string in location){
   is_location <- (temp_df[["location"]] == string)
-  
   total_deaths_na_index <- which(total_deaths_is_na & is_location)
   total_deaths_not_na_index <- which((!total_deaths_is_na) & is_location)
-  
   for (i in total_deaths_na_index){
-    
     index_evctor <- which(total_deaths_not_na_index < i)
-    
     if (length(index_evctor) > 0){
-      
       input_index <- max(index_evctor)
       input_index <- total_deaths_not_na_index[input_index]
-      
       temp_df[['total_deaths']][i] <- temp_df[['total_deaths']][input_index] + temp_df[["new_deaths"]][input_index+1]
     }else{
       temp_df[['total_deaths']][i] <- 0
@@ -267,9 +255,9 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                             )
                           )
                  ),
-                 navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
-                            tabPanel(title = 'Global',setBackgroundColor("#808080")),
-                            tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
+                 #navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
+                 #           tabPanel(title = 'Global',setBackgroundColor("#808080")),
+                 #           tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
                  
                  navbarMenu(title = tags$p(icon('map'),'Map'),
                             tabPanel(title = 'Global',setBackgroundColor("#808080"),
@@ -286,30 +274,34 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                                                   checkboxInput('legend', 'Legend', value = FALSE, width = NULL),
                                                   h4('hey! in here can select date and continent.'),
                                                   h4('Then it will show the bubble plot in right side.')),
-                                     box(width = 10,
+                                     box(width = 10,solidHeader = TRUE,
                                          leafletOutput(outputId = "global_map",width = "100%", height = "500px")
                                      ),
-                                     box(width = 6,plotlyOutput(outputId = 'area_line_chart')),
-                                     box(width = 6,plotlyOutput(outputId = 'area_bar_chart'))
+                                     box(width = 6,solidHeader = TRUE,plotlyOutput(outputId = 'area_line_chart')),
+                                     box(width = 6,solidHeader = TRUE,plotlyOutput(outputId = 'area_bar_chart'))
                             ),
                             tabPanel(title = 'Taiwan',setBackgroundColor("#808080"),
-                                     box(title = 'Taiwan Map',width = 6,leafletOutput(outputId = "taiwan_map",width = "100%")),
-                                     box(title = 'Taiwan Data',width = 6,DT::dataTableOutput(outputId = 'tw_all_data')),
-                                     box(title = 'Age Distribution',width = 7,plotlyOutput(outputId = 'age_distribution')),
-                                     box(title = 'Gender Proportion',width = 5,plotlyOutput(outputId = 'gender_distribution')),
+                                     box(title = 'Taiwan Map',width = 6,solidHeader = TRUE,
+                                         leafletOutput(outputId = "taiwan_map",width = "100%")),
+                                     box(title = 'Taiwan Data',width = 6,solidHeader = TRUE,
+                                         DT::dataTableOutput(outputId = 'tw_all_data')),
+                                     box(title = 'Age Distribution',width = 7,solidHeader = TRUE,
+                                         plotlyOutput(outputId = 'age_distribution')),
+                                     box(title = 'Gender Proportion',width = 5,solidHeader = TRUE,
+                                         plotlyOutput(outputId = 'gender_distribution')),
                                      box(title = 'Gender Pie Chart-(click specific city on map)',width = 6,
-                                         plotlyOutput(outputId = 'city_gender_pie_chart')),
+                                         solidHeader = TRUE,plotlyOutput(outputId = 'city_gender_pie_chart')),
                                      #box(title = 'Taiwan Data',width = 6,
                                      #    DT::dataTableOutput(outputId = 'test_summary')),
                                      box(title = 'Age Pie Chart-(click specific city on map)',width = 6,
-                                         plotlyOutput(outputId = 'city_age_pie_chart'))
+                                         solidHeader = TRUE,plotlyOutput(outputId = 'city_age_pie_chart'))
                             )
                  ),
                  
                  tabPanel(title = tags$p(icon('data'),'data'),
-                          setBackgroundColor("#1f77b4"),
-                          sidebarPanel(width = 12,
-                                       height = 2,
+                          setBackgroundColor("#808080"),
+                          sidebarPanel(width = 2,
+                                       #height = 2,
                                        title = 'data_intro',
                                        radioButtons(inputId = 'data_type',
                                                     label = 'Select Data : ',
@@ -323,7 +315,7 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                                        selectInput("Country", "Select Country/Region:",
                                                    choices = NULL)
                           ),   
-                          box(width = 12, height = 100,
+                          box(width = 10,solidHeader = TRUE,# height = 100,
                               DTOutput('intro_data')
                           )
                           

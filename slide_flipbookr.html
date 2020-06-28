@@ -102,7 +102,7 @@ class: middle, inverse, center
 - Dashboard 版面配置
 --
 
-- Shiny 效率調整
+- 設定互動式介面
 
 
 
@@ -1373,12 +1373,12 @@ my_plot +
             aes(label = as.character(date)),  
             size = 20, col = "grey18") +  
   aes(group = location) +  
-* gganimate::transition_time(date)  -&gt;oooo
+* gganimate::transition_time(date)
 ```
 ]
  
 .right-panel-plot3-auto[
-
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_8_output-1.gif" width="80%" /&gt;
 ]
 
 &lt;style&gt;
@@ -1416,8 +1416,8 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7)
 ```
 
-<div id="htmlwidget-37915acc1ec94929de31" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-37915acc1ec94929de31">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-28d2d29fdccc119201b4" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-28d2d29fdccc119201b4">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
 # leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
@@ -1518,6 +1518,28 @@ class: inverse, middle, center
 
 
 ---
+class: middle, inverse, center
+
+# 心得總結
+
+--
+
+### 1.R套件很多，有空真的可以不用等老師教，自己摸
+
+
+### 2.可以從基礎的學，再延伸，更有儀式感、成就感
+
+
+### 3.可以去了解套件怎麼運作的，修改它！
+
+
+### 4.學習沒有止境
+
+
+### 5.維持一顆快樂學習的心
+
+---
+
 class: middle, inverse, center
 
 # Slide End !

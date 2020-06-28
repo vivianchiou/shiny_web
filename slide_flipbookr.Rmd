@@ -288,7 +288,7 @@ my_plot +
             aes(label = as.character(date)),  
             size = 20, col = "grey18") +  
   aes(group = location) +  
-  gganimate::transition_time(date)  ->oooo
+  gganimate::transition_time(date) 
 ```
 
 ---

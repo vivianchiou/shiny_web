@@ -17,8 +17,8 @@
 - [x] add **flipbookr** link to github
 - [x] add **revealjs** link to github
 - [ ] add **shiny.app**
-- [ ] add 動動圖 to flipbookr
+- [x] add 動動圖 to flipbookr
 - [ ] dashboard become better
-- [ ] pic
+- [x] pic
 - [ ] word to tsdc
 - [ ] md add pic 

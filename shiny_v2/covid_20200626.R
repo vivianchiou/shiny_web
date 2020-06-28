@@ -246,10 +246,10 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                             #box1:top area
                             box(
                               width = 12,
-                              valueBoxOutput(outputId = 'update_date',width = 3),
-                              valueBoxOutput(outputId = 'confirmed_cases',width = 3),
-                              valueBoxOutput(outputId = 'deaths',width = 3),
-                              valueBoxOutput(outputId = 'c',width = 3)
+                              valueBoxOutput(outputId = 'update_date',width = 4),
+                              valueBoxOutput(outputId = 'confirmed_cases',width = 4),
+                              valueBoxOutput(outputId = 'deaths',width = 4)#,
+                              #valueBoxOutput(outputId = 'c',width = 3)
                             ),
                             #box2:left
                             box(title = 'TREND',width = 6,
@@ -338,8 +338,8 @@ server <- function(input, output, session) {
   output$deaths <- renderValueBox({ valueBox(prettyNum(world_situation_final$total_deaths, big.mark = ","),
                                              subtitle = tags$p(icon("arrow-up"),"New Deaths :",prettyNum(world_situation_final$new_deaths, big.mark = ","),style = "font-size: 100%;"),
                                              color = "red", icon = icon("heartbeat"))})
-  output$c <- renderValueBox({ valueBox(value = 'need to do something',
-                                        subtitle = "Subtitle text",color="blue",icon = icon("hand-holding-medical"))})
+  #output$c <- renderValueBox({ valueBox(value = 'need to do something',
+  #                                      subtitle = "Subtitle text",color="blue",icon = icon("hand-holding-medical"))})
   ##sec area
   output$global_line_chart <- renderPlotly({ 
     world_situation %>% 

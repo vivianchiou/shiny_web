@@ -33,7 +33,28 @@ class: center, middle, inverse, title-slide
 
 class: center, middle
 
-# xaringan
+# Introduction
+
+--
+
+### 1.活動流程
+
+--
+
+### 2.分析步驟
+
+--
+
+###3.成果分享
+
+--
+
+###4.延伸圖型
+
+--
+
+###5.心得與建議
+---
 
 &lt;!-- setting --&gt;
 
@@ -43,7 +64,7 @@ class: center, middle
 
 
 
-class: middle, center, inverse
+
 
 # Hi!
 
@@ -553,6 +574,7 @@ ranked_by_date[ranked_by_date$location=="United States",]$location= "US"
 
 
 ```r
+extrafont::loadfonts(device="win")
 my_theme &lt;- theme_classic(base_family = "Times") +
   theme(axis.text.y = element_blank()) +
   theme(axis.ticks.y = element_blank()) +
@@ -1361,8 +1383,8 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7)
 ```
 
-<div id="htmlwidget-9b827674b35405d4e87e" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-9b827674b35405d4e87e">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9b8822443423e4540fa7" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9b8822443423e4540fa7">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
 # leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
@@ -1379,7 +1401,7 @@ background-image: url("fpb_p1.png")
 gif_file("./covid_gganimation/barchart2.gif")
 ```
 
-&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-6-1.gif" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-6-1.gif" width="80%" height="80%" style="display: block; margin: auto;" /&gt;
 
 ---
 
@@ -1390,7 +1412,6 @@ gif_file("./covid_gganimation/cov.gif")
 
 &lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-7-1.gif" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
----
 
 
 ---
@@ -1474,6 +1495,25 @@ class: inverse, middle, center
 ---
 class: inverse, middle, center
 # 先看範例、先看指令教學、先自己摸索、先看大神的境界、有成就感的小物件、設定時間、設定重要性、評價必須性、學會取捨、維持動力
+
+
+
+
+---
+class: middle, inverse, center
+
+# 使用github：版本控制
+
+--
+
+### 1.當雲端使用可以 下載/上傳 最新修改完的版本
+
+
+### 2.從歷史紀錄可以知道不同版本間的差別
+
+
+### 3.不同人在上傳新版本的時候可以加一些留言訊息說明此版本新增/刪減了甚麼內容
+
 
 
 ---

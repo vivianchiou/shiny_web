@@ -31,6 +31,10 @@ class: center, middle, inverse, title-slide
 ---
 
 
+class: center, middle
+
+# xaringan
+
 &lt;!-- setting --&gt;
 
 
@@ -39,37 +43,11 @@ class: center, middle, inverse, title-slide
 
 
 
+class: middle, center, inverse
+
+# Hi!
 
 ---
-
-class: middle, inverse, center
-
-# Introduction
-
---
-
-### 1.活動流程
-
---
-
-### 2.分析步驟
-
---
-
-###3.成果分享
-
---
-
-###4.延伸圖型
-
---
-
-###5.心得與建議
-
-
----
-
-&lt;!-- page_2 --&gt;
 
 # 活動流程
 
@@ -85,25 +63,18 @@ class: middle, inverse, center
 
 
 ---
-&lt;!-- page_3 --&gt;
-&lt;!-- page_4  --&gt;
-
+&lt;!-- page_2 --&gt;
 # 分析步驟
 
 - 處理數據數字不一、GIS 處理
---
 
 - 資料來源
---
 
 - 工具與套件選擇
---
 
 - Dashboard 版面配置
---
 
 - 設定互動式介面
-
 
 
 ---
@@ -131,7 +102,6 @@ class: middle, inverse, center
 library(flipbookr)
 library(tidyverse)
 library(xaringan)
-
 `
 ``` 
 
@@ -148,7 +118,8 @@ If you want to generate a table, make sure it is in the HTML format (instead of 
 
 
 ```r
-# df &lt;- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+df &lt;- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+
 df_for_dt = df
 names(df_for_dt)=kableExtra::cell_spec(names(df_for_dt),color = '#000000')
 knitr::kable(head(df_for_dt),format = 'html',escape = FALSE) %&gt;%
@@ -242,23 +213,6 @@ count: false
 
 ```r
 library(gapminder)  
-*library(tidyverse)
-```
-]
- 
-.right-panel-df_intro-auto[
-
-]
-
----
-count: false
- 
-
-.left-panel-df_intro-auto[
-
-```r
-library(gapminder)  
-library(tidyverse)  
 
 *df
 ```
@@ -267,7 +221,7 @@ library(tidyverse)
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,324 x 6
+  # A tibble: 26,534 x 6
      date       location    new_cases new_deaths total_cases total_deaths
      &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
    1 2019-12-31 Afghanistan         0          0           0            0
@@ -280,7 +234,7 @@ library(tidyverse)
    8 2020-01-07 Afghanistan         0          0           0            0
    9 2020-01-08 Afghanistan         0          0           0            0
   10 2020-01-09 Afghanistan         0          0           0            0
-  # ... with 26,314 more rows
+  # ... with 26,524 more rows
 ```
 ]
 
@@ -292,7 +246,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
 * select(location, total_cases, date)
@@ -302,7 +255,7 @@ df %&gt;%
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,324 x 3
+  # A tibble: 26,534 x 3
      location    total_cases date      
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
    1 Afghanistan           0 2019-12-31
@@ -315,7 +268,7 @@ df %&gt;%
    8 Afghanistan           0 2020-01-07
    9 Afghanistan           0 2020-01-08
   10 Afghanistan           0 2020-01-09
-  # ... with 26,314 more rows
+  # ... with 26,524 more rows
 ```
 ]
 
@@ -327,7 +280,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -338,7 +290,7 @@ df %&gt;%
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,144 x 3
+  # A tibble: 26,353 x 3
      location    total_cases date      
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
    1 Afghanistan           0 2019-12-31
@@ -351,7 +303,7 @@ df %&gt;%
    8 Afghanistan           0 2020-01-07
    9 Afghanistan           0 2020-01-08
   10 Afghanistan           0 2020-01-09
-  # ... with 26,134 more rows
+  # ... with 26,343 more rows
 ```
 ]
 
@@ -363,7 +315,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -375,8 +326,8 @@ df %&gt;%
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,144 x 3
-  # Groups:   date [180]
+  # A tibble: 26,353 x 3
+  # Groups:   date [181]
      location    total_cases date      
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
    1 Afghanistan           0 2019-12-31
@@ -389,7 +340,7 @@ df %&gt;%
    8 Afghanistan           0 2020-01-07
    9 Afghanistan           0 2020-01-08
   10 Afghanistan           0 2020-01-09
-  # ... with 26,134 more rows
+  # ... with 26,343 more rows
 ```
 ]
 
@@ -401,7 +352,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -414,8 +364,8 @@ df %&gt;%
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,144 x 3
-  # Groups:   date [180]
+  # A tibble: 26,353 x 3
+  # Groups:   date [181]
      location    total_cases date      
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
    1 China                27 2019-12-31
@@ -428,7 +378,7 @@ df %&gt;%
    8 Bahrain               0 2019-12-31
    9 Belarus               0 2019-12-31
   10 Belgium               0 2019-12-31
-  # ... with 26,134 more rows
+  # ... with 26,343 more rows
 ```
 ]
 
@@ -440,7 +390,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -455,8 +404,8 @@ df %&gt;%
 .right-panel-df_intro-auto[
 
 ```
-  # A tibble: 26,144 x 4
-  # Groups:   date [180]
+  # A tibble: 26,353 x 4
+  # Groups:   date [181]
      location    total_cases date        rank
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
    1 China                27 2019-12-31     1
@@ -469,7 +418,7 @@ df %&gt;%
    8 Bahrain               0 2019-12-31     8
    9 Belarus               0 2019-12-31     9
   10 Belgium               0 2019-12-31    10
-  # ... with 26,134 more rows
+  # ... with 26,343 more rows
 ```
 ]
 
@@ -481,7 +430,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -506,7 +454,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -532,7 +479,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -559,7 +505,6 @@ count: false
 
 ```r
 library(gapminder)  
-library(tidyverse)  
 
 df %&gt;%  
   select(location, total_cases, date) %&gt;%  
@@ -633,8 +578,8 @@ count: false
 .right-panel-plot1-auto[
 
 ```
-  # A tibble: 26,144 x 4
-  # Groups:   date [180]
+  # A tibble: 26,353 x 4
+  # Groups:   date [181]
      location    total_cases date        rank
      &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
    1 China                27 2019-12-31     1
@@ -647,7 +592,7 @@ count: false
    8 Bahrain               0 2019-12-31     8
    9 Belarus               0 2019-12-31     9
   10 Belgium               0 2019-12-31    10
-  # ... with 26,134 more rows
+  # ... with 26,343 more rows
 ```
 ]
 
@@ -667,8 +612,8 @@ ranked_by_date %&gt;%
 .right-panel-plot1-auto[
 
 ```
-  # A tibble: 1,462 x 4
-  # Groups:   date [7]
+  # A tibble: 1,671 x 4
+  # Groups:   date [8]
      location total_cases date        rank
      &lt;chr&gt;          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
    1 US           2255119 2020-06-21     1
@@ -681,7 +626,7 @@ ranked_by_date %&gt;%
    8 Italy         238275 2020-06-21     8
    9 Chile         236748 2020-06-21     9
   10 Iran          202584 2020-06-21    10
-  # ... with 1,452 more rows
+  # ... with 1,661 more rows
 ```
 ]
 
@@ -702,8 +647,8 @@ ranked_by_date %&gt;%
 .right-panel-plot1-auto[
 
 ```
-  # A tibble: 42 x 4
-  # Groups:   date [7]
+  # A tibble: 48 x 4
+  # Groups:   date [8]
      location total_cases date        rank
      &lt;chr&gt;          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
    1 US           2255119 2020-06-21     1
@@ -716,7 +661,7 @@ ranked_by_date %&gt;%
    8 Brazil       1085038 2020-06-22     2
    9 Russia        584680 2020-06-22     3
   10 India         425282 2020-06-22     4
-  # ... with 32 more rows
+  # ... with 38 more rows
 ```
 ]
 
@@ -1416,20 +1361,34 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7)
 ```
 
-<div id="htmlwidget-28d2d29fdccc119201b4" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-28d2d29fdccc119201b4">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-9b827674b35405d4e87e" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9b827674b35405d4e87e">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
 # leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
+
+---
+class: center, inverse
+background-image: url("fpb_p1.png")
+
 ---
 
 
 ```r
-gif_file("covid-19.gif")
+gif_file("./covid_gganimation/barchart2.gif")
 ```
 
-&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-6-1.gif" width="100%" /&gt;
+&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-6-1.gif" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
+
+---
+
+
+```r
+gif_file("./covid_gganimation/cov.gif")
+```
+
+&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-7-1.gif" width="50%" height="50%" style="display: block; margin: auto;" /&gt;
 
 ---
 

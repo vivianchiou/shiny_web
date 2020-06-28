@@ -15,6 +15,10 @@ output:
       countIncrementalSlides: false
 ---
 
+class: center, middle
+
+# xaringan
+
 <!-- setting -->
 
 ```{r setup, include=FALSE}
@@ -34,11 +38,10 @@ style_duo_accent(
   link_color = "#f7da88",
   text_color = "#FFFFFF",
   background_color = '#424242'
-  
 )
 ```
 
-```{r, include = F}
+```{r, include=FALSE}
 # This is the recommended set up for flipbooks
 # you might think about setting cache to TRUE as you gain practice --- building flipbooks from scratch can be time consuming
 library(flipbookr)
@@ -47,43 +50,15 @@ library(tidyverse)
 library(gganimate)
 library(gifski)
 library(ggplot2)
-# 
-
-df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+# library(xaringanthemer)
 
 ```
 
+class: middle, center, inverse
+
+# Hi!
 
 ---
-
-class: middle, inverse, center
-
-# Introduction
-
---
-
-### 1.活動流程
-
---
-
-### 2.分析步驟
-
---
-
-###3.成果分享
-
---
-
-###4.延伸圖型
-
---
-
-###5.心得與建議
-
-
----
-
-<!-- page_2 -->
 
 # 活動流程
 
@@ -99,25 +74,18 @@ class: middle, inverse, center
 
 
 ---
-<!-- page_3 -->
-<!-- page_4  -->
-
+<!-- page_2 -->
 # 分析步驟
 
 - 處理數據數字不一、GIS 處理
---
 
 - 資料來源
---
 
 - 工具與套件選擇
---
 
 - Dashboard 版面配置
---
 
 - 設定互動式介面
-
 
 
 ---
@@ -145,7 +113,6 @@ class: middle, inverse, center
 library(flipbookr)
 library(tidyverse)
 library(xaringan)
-
 "``
 ``` 
 
@@ -161,7 +128,8 @@ library(xaringan)
 If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
 
 ```{r }
-# df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+
 df_for_dt = df
 names(df_for_dt)=kableExtra::cell_spec(names(df_for_dt),color = '#000000')
 knitr::kable(head(df_for_dt),format = 'html',escape = FALSE) %>%
@@ -176,7 +144,6 @@ knitr::kable(head(df_for_dt),format = 'html',escape = FALSE) %>%
 
 ```{r df_intro, include=F}
 library(gapminder)
-library(tidyverse)
 
 df %>%  
   select(location, total_cases, date) %>%  
@@ -299,10 +266,21 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%>% setView(lng = 121, lat = 21, zoom = 7)
 # leaflet() %>% addTiles()%>% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
+
+---
+class: center, inverse
+background-image: url("fpb_p1.png")
+
 ---
 
-```{r out.width='100%',  fig.height=4}
-gif_file("covid-19.gif")
+```{r fig.height=1, out.width='50%', out.height="50%", fig.align='center'}
+gif_file("./covid_gganimation/barchart2.gif")
+```
+
+---
+
+```{r fig.height=1, out.width="50%", out.height="50%", fig.align='center'}
+gif_file("./covid_gganimation/cov.gif")
 ```
 
 ---

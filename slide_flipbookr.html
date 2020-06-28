@@ -81,7 +81,7 @@ class: middle, inverse, center
 
 - 欣賞各大網站儀表板、工具
 
--	創造自己的 COVID 19 Dashboard
+-	使用 GITHUB 協作 COVID 19 Dashboard
 
 
 ---
@@ -148,8 +148,10 @@ If you want to generate a table, make sure it is in the HTML format (instead of 
 
 
 ```r
-names(df) &lt;- kableExtra::cell_spec(names(df),color = '#000000')
-knitr::kable(head(df),format = 'html',escape = FALSE) %&gt;%
+# df &lt;- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+df_for_dt = df
+names(df_for_dt)=kableExtra::cell_spec(names(df_for_dt),color = '#000000')
+knitr::kable(head(df_for_dt),format = 'html',escape = FALSE) %&gt;%
   kableExtra::row_spec(1:6, bold = T, color = "#000000", background = "#d1d1d1")
 ```
 
@@ -217,7 +219,1195 @@ knitr::kable(head(df),format = 'html',escape = FALSE) %&gt;%
 &lt;/table&gt;
 
 ---
-&lt;!-- try --&gt;
+
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+*library(gapminder)
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+*library(tidyverse)
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+*df
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,324 x 6
+     date       location    new_cases new_deaths total_cases total_deaths
+     &lt;date&gt;     &lt;chr&gt;           &lt;dbl&gt;      &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;
+   1 2019-12-31 Afghanistan         0          0           0            0
+   2 2020-01-01 Afghanistan         0          0           0            0
+   3 2020-01-02 Afghanistan         0          0           0            0
+   4 2020-01-03 Afghanistan         0          0           0            0
+   5 2020-01-04 Afghanistan         0          0           0            0
+   6 2020-01-05 Afghanistan         0          0           0            0
+   7 2020-01-06 Afghanistan         0          0           0            0
+   8 2020-01-07 Afghanistan         0          0           0            0
+   9 2020-01-08 Afghanistan         0          0           0            0
+  10 2020-01-09 Afghanistan         0          0           0            0
+  # ... with 26,314 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+* select(location, total_cases, date)
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,324 x 3
+     location    total_cases date      
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
+   1 Afghanistan           0 2019-12-31
+   2 Afghanistan           0 2020-01-01
+   3 Afghanistan           0 2020-01-02
+   4 Afghanistan           0 2020-01-03
+   5 Afghanistan           0 2020-01-04
+   6 Afghanistan           0 2020-01-05
+   7 Afghanistan           0 2020-01-06
+   8 Afghanistan           0 2020-01-07
+   9 Afghanistan           0 2020-01-08
+  10 Afghanistan           0 2020-01-09
+  # ... with 26,314 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+* filter(location!="World")
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,144 x 3
+     location    total_cases date      
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
+   1 Afghanistan           0 2019-12-31
+   2 Afghanistan           0 2020-01-01
+   3 Afghanistan           0 2020-01-02
+   4 Afghanistan           0 2020-01-03
+   5 Afghanistan           0 2020-01-04
+   6 Afghanistan           0 2020-01-05
+   7 Afghanistan           0 2020-01-06
+   8 Afghanistan           0 2020-01-07
+   9 Afghanistan           0 2020-01-08
+  10 Afghanistan           0 2020-01-09
+  # ... with 26,134 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+* group_by(date)
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,144 x 3
+  # Groups:   date [180]
+     location    total_cases date      
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
+   1 Afghanistan           0 2019-12-31
+   2 Afghanistan           0 2020-01-01
+   3 Afghanistan           0 2020-01-02
+   4 Afghanistan           0 2020-01-03
+   5 Afghanistan           0 2020-01-04
+   6 Afghanistan           0 2020-01-05
+   7 Afghanistan           0 2020-01-06
+   8 Afghanistan           0 2020-01-07
+   9 Afghanistan           0 2020-01-08
+  10 Afghanistan           0 2020-01-09
+  # ... with 26,134 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+* arrange(date, -total_cases)
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,144 x 3
+  # Groups:   date [180]
+     location    total_cases date      
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;    
+   1 China                27 2019-12-31
+   2 Afghanistan           0 2019-12-31
+   3 Algeria               0 2019-12-31
+   4 Armenia               0 2019-12-31
+   5 Australia             0 2019-12-31
+   6 Austria               0 2019-12-31
+   7 Azerbaijan            0 2019-12-31
+   8 Bahrain               0 2019-12-31
+   9 Belarus               0 2019-12-31
+  10 Belgium               0 2019-12-31
+  # ... with 26,134 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+  arrange(date, -total_cases) %&gt;%  
+# assign ranking
+* mutate(rank = 1:n())
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+```
+  # A tibble: 26,144 x 4
+  # Groups:   date [180]
+     location    total_cases date        rank
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
+   1 China                27 2019-12-31     1
+   2 Afghanistan           0 2019-12-31     2
+   3 Algeria               0 2019-12-31     3
+   4 Armenia               0 2019-12-31     4
+   5 Australia             0 2019-12-31     5
+   6 Austria               0 2019-12-31     6
+   7 Azerbaijan            0 2019-12-31     7
+   8 Bahrain               0 2019-12-31     8
+   9 Belarus               0 2019-12-31     9
+  10 Belgium               0 2019-12-31    10
+  # ... with 26,134 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+  arrange(date, -total_cases) %&gt;%  
+# assign ranking
+  mutate(rank = 1:n())-&gt;  
+*ranked_by_date
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+  arrange(date, -total_cases) %&gt;%  
+# assign ranking
+  mutate(rank = 1:n())-&gt;  
+ranked_by_date  
+*ranked_by_date[ranked_by_date$location=="United Kingdom",]$location= "UK"
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+  arrange(date, -total_cases) %&gt;%  
+# assign ranking
+  mutate(rank = 1:n())-&gt;  
+ranked_by_date  
+ranked_by_date[ranked_by_date$location=="United Kingdom",]$location= "UK"  
+*ranked_by_date[ranked_by_date$location=="United States",]$location= "US"
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-df_intro-auto[
+
+```r
+library(gapminder)  
+library(tidyverse)  
+
+df %&gt;%  
+  select(location, total_cases, date) %&gt;%  
+  filter(location!="World")%&gt;%  
+  group_by(date) %&gt;%  
+  arrange(date, -total_cases) %&gt;%  
+# assign ranking
+  mutate(rank = 1:n())-&gt;  
+ranked_by_date  
+ranked_by_date[ranked_by_date$location=="United Kingdom",]$location= "UK"  
+ranked_by_date[ranked_by_date$location=="United States",]$location= "US"  
+```
+]
+ 
+.right-panel-df_intro-auto[
+
+]
+
+&lt;style&gt;
+.left-panel-df_intro-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-df_intro-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-df_intro-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
+
+
+```r
+my_theme &lt;- theme_classic(base_family = "Times") +
+  theme(axis.text.y = element_blank()) +
+  theme(axis.ticks.y = element_blank()) +
+  theme(axis.line.y = element_blank()) +
+  theme(legend.background = element_rect(fill = "gainsboro")) +
+  theme(plot.background = element_rect(fill = "gainsboro")) +
+  theme(panel.background = element_rect(fill = "gainsboro"))+
+  theme(legend.position = "none")
+```
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+*ranked_by_date
+```
+]
+ 
+.right-panel-plot1-auto[
+
+```
+  # A tibble: 26,144 x 4
+  # Groups:   date [180]
+     location    total_cases date        rank
+     &lt;chr&gt;             &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
+   1 China                27 2019-12-31     1
+   2 Afghanistan           0 2019-12-31     2
+   3 Algeria               0 2019-12-31     3
+   4 Armenia               0 2019-12-31     4
+   5 Australia             0 2019-12-31     5
+   6 Austria               0 2019-12-31     6
+   7 Azerbaijan            0 2019-12-31     7
+   8 Bahrain               0 2019-12-31     8
+   9 Belarus               0 2019-12-31     9
+  10 Belgium               0 2019-12-31    10
+  # ... with 26,134 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+* filter(date&gt;'2020-06-20')
+```
+]
+ 
+.right-panel-plot1-auto[
+
+```
+  # A tibble: 1,462 x 4
+  # Groups:   date [7]
+     location total_cases date        rank
+     &lt;chr&gt;          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
+   1 US           2255119 2020-06-21     1
+   2 Brazil       1067579 2020-06-21     2
+   3 Russia        576952 2020-06-21     3
+   4 India         410461 2020-06-21     4
+   5 UK            303110 2020-06-21     5
+   6 Peru          251338 2020-06-21     6
+   7 Spain         246272 2020-06-21     7
+   8 Italy         238275 2020-06-21     8
+   9 Chile         236748 2020-06-21     9
+  10 Iran          202584 2020-06-21    10
+  # ... with 1,452 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+* filter(rank &lt;= 6)
+```
+]
+ 
+.right-panel-plot1-auto[
+
+```
+  # A tibble: 42 x 4
+  # Groups:   date [7]
+     location total_cases date        rank
+     &lt;chr&gt;          &lt;dbl&gt; &lt;date&gt;     &lt;int&gt;
+   1 US           2255119 2020-06-21     1
+   2 Brazil       1067579 2020-06-21     2
+   3 Russia        576952 2020-06-21     3
+   4 India         410461 2020-06-21     4
+   5 UK            303110 2020-06-21     5
+   6 Peru          251338 2020-06-21     6
+   7 US           2280912 2020-06-22     1
+   8 Brazil       1085038 2020-06-22     2
+   9 Russia        584680 2020-06-22     3
+  10 India         425282 2020-06-22     4
+  # ... with 32 more rows
+```
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+* ggplot()
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_4_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+* aes(xmin = 0 ,
+*     xmax = total_cases / 1000)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_5_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+* aes(ymin = rank - .45,
+*     ymax = rank + .45,
+*     y = rank)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_6_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+* facet_wrap(~ date)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_7_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+* geom_rect(alpha = .7)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_8_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+* aes(fill = location)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_9_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+* scale_fill_viridis_d(option = "magma",
+*                      direction = -1)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_10_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+* scale_x_continuous(
+*   limits = c(-800, 3000),
+*   breaks = c(0, 1000, 2000, 2500))
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_11_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+* geom_text(col = "gray13",
+*           hjust = "right",
+*           aes(label = location),
+*           x = -50)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_12_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = location),  
+            x = -50)+  
+* scale_y_reverse()
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_13_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = location),  
+            x = -50)+  
+  scale_y_reverse() +  
+* labs(fill = NULL)
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_14_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = location),  
+            x = -50)+  
+  scale_y_reverse() +  
+  labs(fill = NULL) +  
+* labs(x = 'cases (thousand)')
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_15_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = location),  
+            x = -50)+  
+  scale_y_reverse() +  
+  labs(fill = NULL) +  
+  labs(x = 'cases (thousand)') +  
+* labs(y = "")
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_16_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot1-auto[
+
+```r
+# first plot a small data
+ranked_by_date %&gt;%  
+  filter(date&gt;'2020-06-20') %&gt;%  
+  filter(rank &lt;= 6) %&gt;%  
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",  
+                       direction = -1) +  
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",  
+            hjust = "right",  
+            aes(label = location),  
+            x = -50)+  
+  scale_y_reverse() +  
+  labs(fill = NULL) +  
+  labs(x = 'cases (thousand)') +  
+  labs(y = "") +  
+* my_theme
+```
+]
+ 
+.right-panel-plot1-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot1_auto_17_output-1.png" width="80%" /&gt;
+]
+
+&lt;style&gt;
+.left-panel-plot1-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-plot1-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-plot1-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+
+---
+
+
+```r
+ranked_by_date %&gt;%  
+  # filter(date&gt;'2020-06-20') %&gt;%
+* filter(rank &lt;= 6) %&gt;%
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",
+                       direction = -1) +
+  scale_x_continuous(  
+    limits = c(-800, 3000),
+    breaks = c(0, 1000, 2000, 2500)) +
+  geom_text(col = "gray13",
+            hjust = "right",
+            aes(label = location),
+            x = -50)+  
+  scale_y_reverse() +
+  labs(fill = NULL) +  
+  labs(x = 'cases (thousand)') +  
+  labs(y = "") +  
+  my_theme -&gt;
+my_plot
+```
+
+
+---
+
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+*library(gganimate)
+```
+]
+ 
+.right-panel-plot3-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+*options(gganimate.nframes = 200)
+```
+]
+ 
+.right-panel-plot3-auto[
+
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+*my_plot
+```
+]
+ 
+.right-panel-plot3-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_3_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+my_plot +  
+* facet_null()
+```
+]
+ 
+.right-panel-plot3-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_4_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+my_plot +  
+  facet_null() +  
+* scale_x_continuous(
+*   limits = c(-400, 3000),
+*   breaks = c(0, 1000, 2000, 2500))
+```
+]
+ 
+.right-panel-plot3-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_5_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+my_plot +  
+  facet_null() +  
+  scale_x_continuous(  
+    limits = c(-400, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+* geom_text(x = 2000 , y = -6,
+*           family = "Times",
+*           aes(label = as.character(date)),
+*           size = 20, col = "grey18")
+```
+]
+ 
+.right-panel-plot3-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_6_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+my_plot +  
+  facet_null() +  
+  scale_x_continuous(  
+    limits = c(-400, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(x = 2000 , y = -6,  
+            family = "Times",  
+            aes(label = as.character(date)),  
+            size = 20, col = "grey18") +  
+* aes(group = location)
+```
+]
+ 
+.right-panel-plot3-auto[
+&lt;img src="slide_flipbookr_files/figure-html/plot3_auto_7_output-1.png" width="80%" /&gt;
+]
+
+---
+count: false
+ 
+
+.left-panel-plot3-auto[
+
+```r
+library(gganimate)  
+options(gganimate.nframes = 200)  
+my_plot +  
+  facet_null() +  
+  scale_x_continuous(  
+    limits = c(-400, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(x = 2000 , y = -6,  
+            family = "Times",  
+            aes(label = as.character(date)),  
+            size = 20, col = "grey18") +  
+  aes(group = location) +  
+* gganimate::transition_time(date)  -&gt;oooo
+```
+]
+ 
+.right-panel-plot3-auto[
+
+]
+
+&lt;style&gt;
+.left-panel-plot3-auto {
+  color: #777;
+  width: 38.6138613861386%;
+  height: 92%;
+  float: left;
+  font-size: 80%
+}
+.right-panel-plot3-auto {
+  width: 59.4059405940594%;
+  float: right;
+  padding-left: 1%;
+  font-size: 80%
+}
+.middle-panel-plot3-auto {
+  width: 0%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+
+
+---
 
 
 ```r
@@ -226,20 +1416,22 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%&gt;% setView(lng = 121, lat = 21, zoom = 7)
 ```
 
-<div id="htmlwidget-09d3dab12ffd0b2dbc9c" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
-<script type="application/json" data-for="htmlwidget-09d3dab12ffd0b2dbc9c">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-37915acc1ec94929de31" style="width:100%;height:1200px;" class="leaflet html-widget"></div>
+<script type="application/json" data-for="htmlwidget-37915acc1ec94929de31">{"x":{"options":{"minZoom":7,"maxZoom":7,"crs":{"crsClass":"L.CRS.EPSG3857","code":null,"proj4def":null,"projectedBounds":null,"options":{}},"zoomControl":false},"calls":[{"method":"addTiles","args":["//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",null,null,{"minZoom":0,"maxZoom":18,"tileSize":256,"subdomains":"abc","errorTileUrl":"","tms":false,"noWrap":false,"zoomOffset":0,"zoomReverse":false,"opacity":1,"zIndex":1,"detectRetina":false,"attribution":"&copy; <a href=\"http://openstreetmap.org\">OpenStreetMap<\/a> contributors, <a href=\"http://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA<\/a>"}]}],"setView":[[21,121],7,[]]},"evals":[],"jsHooks":[]}</script>
 
 ```r
 # leaflet() %&gt;% addTiles()%&gt;% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
-
 ---
 
 
+```r
+gif_file("covid-19.gif")
+```
 
+&lt;img src="slide_flipbookr_files/figure-html/unnamed-chunk-6-1.gif" width="100%" /&gt;
 
-
-
+---
 
 
 ---
@@ -327,7 +1519,6 @@ class: inverse, middle, center
 
 ---
 class: middle, inverse, center
-&lt;!-- page_-1  --&gt;
 
 # Slide End !
 --

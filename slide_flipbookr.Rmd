@@ -34,7 +34,6 @@ style_duo_accent(
   link_color = "#f7da88",
   text_color = "#FFFFFF",
   background_color = '#424242'
-  # text_font_base = ""
   
 )
 ```
@@ -51,6 +50,7 @@ library(ggplot2)
 # 
 
 df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+
 ```
 
 
@@ -95,7 +95,7 @@ class: middle, inverse, center
 
 - 欣賞各大網站儀表板、工具
 
--	創造自己的 COVID 19 Dashboard
+-	使用 GITHUB 協作 COVID 19 Dashboard
 
 
 ---
@@ -116,7 +116,7 @@ class: middle, inverse, center
 - Dashboard 版面配置
 --
 
-- Shiny 效率調整
+- 設定互動式介面
 
 
 
@@ -161,15 +161,137 @@ library(xaringan)
 If you want to generate a table, make sure it is in the HTML format (instead of Markdown or other formats), e.g.,
 
 ```{r }
-names(df) <- kableExtra::cell_spec(names(df),color = '#000000')
-knitr::kable(head(df),format = 'html',escape = FALSE) %>%
+# df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))
+df_for_dt = df
+names(df_for_dt)=kableExtra::cell_spec(names(df_for_dt),color = '#000000')
+knitr::kable(head(df_for_dt),format = 'html',escape = FALSE) %>%
   kableExtra::row_spec(1:6, bold = T, color = "#000000", background = "#d1d1d1")
 
 
 ```
 
 ---
-<!-- try -->
+
+`r chunk_reveal("df_intro")`
+
+```{r df_intro, include=F}
+library(gapminder)
+library(tidyverse)
+
+df %>%  
+  select(location, total_cases, date) %>%  
+  filter(location!="World")%>%
+  group_by(date) %>%  
+  arrange(date, -total_cases) %>%  
+  # assign ranking
+  mutate(rank = 1:n())->  
+ranked_by_date
+ranked_by_date[ranked_by_date$location=="United Kingdom",]$location= "UK"
+ranked_by_date[ranked_by_date$location=="United States",]$location= "US"
+
+```
+
+---
+
+```{r}
+my_theme <- theme_classic(base_family = "Times") +
+  theme(axis.text.y = element_blank()) +
+  theme(axis.ticks.y = element_blank()) +
+  theme(axis.line.y = element_blank()) +
+  theme(legend.background = element_rect(fill = "gainsboro")) +
+  theme(plot.background = element_rect(fill = "gainsboro")) +
+  theme(panel.background = element_rect(fill = "gainsboro"))+
+  theme(legend.position = "none")
+```
+
+---
+`r chunk_reveal("plot1")`
+
+```{r plot1, include=F}
+# first plot a small data
+ranked_by_date %>%  
+  filter(date>'2020-06-20') %>%
+  filter(rank <= 6) %>%
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",
+                       direction = -1) +
+  scale_x_continuous(  
+    limits = c(-800, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(col = "gray13",
+            hjust = "right",
+            aes(label = location),
+            x = -50)+  
+  scale_y_reverse() +
+  labs(fill = NULL) +  
+  labs(x = 'cases (thousand)') +  
+  labs(y = "") +  
+  my_theme
+```
+
+
+---
+
+```{r}
+ranked_by_date %>%  
+  # filter(date>'2020-06-20') %>%
+  filter(rank <= 6) %>% #<<
+  ggplot() +  
+  aes(xmin = 0 ,  
+      xmax = total_cases / 1000) +  
+  aes(ymin = rank - .45,  
+      ymax = rank + .45,  
+      y = rank) +  
+  facet_wrap(~ date) +  
+  geom_rect(alpha = .7) +  
+  aes(fill = location) +  
+  scale_fill_viridis_d(option = "magma",
+                       direction = -1) +
+  scale_x_continuous(  
+    limits = c(-800, 3000),
+    breaks = c(0, 1000, 2000, 2500)) +
+  geom_text(col = "gray13",
+            hjust = "right",
+            aes(label = location),
+            x = -50)+  
+  scale_y_reverse() +
+  labs(fill = NULL) +  
+  labs(x = 'cases (thousand)') +  
+  labs(y = "") +  
+  my_theme ->
+my_plot
+```
+
+
+---
+
+`r chunk_reveal("plot3")`
+
+```{r plot3, include=F}
+library(gganimate)
+options(gganimate.nframes = 200)
+my_plot +  
+  facet_null() +  
+  scale_x_continuous(  
+    limits = c(-400, 3000),  
+    breaks = c(0, 1000, 2000, 2500)) +  
+  geom_text(x = 2000 , y = -6,  
+            family = "Times",  
+            aes(label = as.character(date)),  
+            size = 20, col = "grey18") +  
+  aes(group = location) +  
+  gganimate::transition_time(date)  ->oooo
+```
+
+---
 
 ```{r out.width='100%',  fig.height=4, eval=require('leaflet')}
 library(leaflet)
@@ -177,12 +299,13 @@ leaflet(options = leafletOptions(zoomControl = FALSE,minZoom = 7, maxZoom = 7)) 
   addTiles()%>% setView(lng = 121, lat = 21, zoom = 7)
 # leaflet() %>% addTiles()%>% setView(lng = 121.0794, lat = 23.9037, zoom = 6)
 ```
-
 ---
 
+```{r out.width='100%',  fig.height=4}
+gif_file("covid-19.gif")
+```
 
-
-
+---
 
 ```{r, echo = F}
 philosophy <- 
@@ -190,13 +313,32 @@ philosophy <-
 "
 
 ```
-
-
 `r text_reveal(text = philosophy, sep = "\\|")`
 
 ---
 class: middle, inverse, center
-<!-- page_-1  -->
+
+# 心得總結
+
+--
+
+### 1.R套件很多，有空真的可以不用等老師教，自己摸
+
+
+### 2.可以從基礎的學，再延伸，更有儀式感、成就感
+
+
+### 3.可以去了解套件怎麼運作的，修改它！
+
+
+### 4.學習沒有止境
+
+
+### 5.維持一顆快樂學習的心
+
+---
+
+class: middle, inverse, center
 
 # Slide End !
 --

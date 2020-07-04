@@ -1,5 +1,9 @@
 # shiny_web
 
+## New Image!!
+
+![new image](img/edgebundle.png)
+
 ## TSDC TEAM A DEMO
 
 - ## [**Shiny.io 展示**](https://tkustatdc.shinyapps.io/deepdataprogram_3rd_team_a_covid19/)
@@ -13,12 +17,13 @@
 
 
 ## do list
-
+- [ ] add image
+- [ ] add other data source (taiwan & glodal)
 - [x] add **flipbookr** link to github
 - [x] add **revealjs** link to github
-- [ ] add **shiny.app**
+- [x] add **shiny.app**
 - [x] add 動動圖 to flipbookr
-- [ ] dashboard become better
+- [x] dashboard become better
 - [x] pic
-- [ ] word to tsdc
-- [ ] md add pic 
+- [x] word to tsdc
+- [x] md add pic 

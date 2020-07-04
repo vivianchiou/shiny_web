@@ -1,7 +1,7 @@
 # shiny_web
 
 ## New Image!!
-
+Follow [this](https://vivianchiou.github.io/shiny_web/img/plot_edgebundle.html) link for the interactive plot. A screenshot of the interface is provided below.
 ![new image](img/edgebundle.png)
 
 ## TSDC TEAM A DEMO

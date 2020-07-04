@@ -135,14 +135,14 @@ rm(long_lat)
 
 #2-2======================================================================================
 #< data clean > - tw data ================================================================
-table_summary_data <- origin_taiwan_covid[,c(2,3,4,6,7)]
-names(table_summary_data) <- c('date','city','gender','age','new_cases')
+table_summary_data <- origin_taiwan_covid[,c(2,3,4,5,6,7)]
+names(table_summary_data) <- c('date','city','gender','is_imported','age','new_cases')
 table_summary_data <- table_summary_data %>% 
-  dplyr::group_by(city,gender,age) %>% 
+  dplyr::group_by(city,gender,age,is_imported) %>% 
   dplyr::summarise(total_cases = sum(new_cases))
 table_summary_data <- merge.data.frame(x = table_summary_data,y = city_name_convert_df,by.x = 'city',by.y = 'city_name_ch',all.x = T)
 table_summary_data <- table_summary_data %>%
-  dplyr::select(city_name_eng,gender,age,total_cases) %>%
+  dplyr::select(city_name_eng,gender,age,is_imported,total_cases) %>%
   dplyr::arrange(city_name_eng,total_cases,age)
 table_summary_data[['age']][table_summary_data[['age']] %in% c('1','2','3','4')] <- '4-'
 table_summary_data$age <- factor(x = table_summary_data$age,levels = c('4-','5-9','10-14',
@@ -153,7 +153,7 @@ table_summary_data$age <- factor(x = table_summary_data$age,levels = c('4-','5-9
 
 tw_age_summary_df <- table_summary_data %>% dplyr::group_by(age) %>% summarise(case = sum(total_cases))
 tw_gender_summary_df <- table_summary_data %>% dplyr::group_by(gender) %>% summarise(case = sum(total_cases))
-
+tw_imported_summary_df <- table_summary_data %>% dplyr::group_by(is_imported) %>% summarise(case = sum(total_cases))
 taiwan_covid <- origin_taiwan_covid[,c(2,3,7)]
 names(taiwan_covid) <- c('date','city','new_cases')
 taiwan_summary_df <- taiwan_covid %>%
@@ -255,10 +255,6 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                             )
                           )
                  ),
-                 #navbarMenu(title = tags$p(icon('chart-line'),'Trand'),
-                 #           tabPanel(title = 'Global',setBackgroundColor("#808080")),
-                 #           tabPanel(title = 'Taiwan',setBackgroundColor("#808080"))),
-                 
                  navbarMenu(title = tags$p(icon('map'),'Map'),
                             tabPanel(title = 'Global',setBackgroundColor("#808080"),
                                      sidebarPanel(width = 2,
@@ -285,19 +281,26 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                                          leafletOutput(outputId = "taiwan_map",width = "100%")),
                                      box(title = 'Taiwan Data',width = 6,solidHeader = TRUE,
                                          DT::dataTableOutput(outputId = 'tw_all_data')),
-                                     box(title = 'Age Distribution',width = 7,solidHeader = TRUE,
-                                         plotlyOutput(outputId = 'age_distribution')),
-                                     box(title = 'Gender Proportion',width = 5,solidHeader = TRUE,
-                                         plotlyOutput(outputId = 'gender_distribution')),
-                                     box(title = 'Gender Pie Chart-(click specific city on map)',width = 6,
-                                         solidHeader = TRUE,plotlyOutput(outputId = 'city_gender_pie_chart')),
-                                     #box(title = 'Taiwan Data',width = 6,
-                                     #    DT::dataTableOutput(outputId = 'test_summary')),
-                                     box(title = 'Age Pie Chart-(click specific city on map)',width = 6,
-                                         solidHeader = TRUE,plotlyOutput(outputId = 'city_age_pie_chart'))
+                                     box(title = 'Summary Infomation',width = 6,
+                                         tabsetPanel(type = 'tabs',
+                                                     tabPanel(title = 'Age Distribution',
+                                                              plotlyOutput(outputId = 'age_distribution')),
+                                                     tabPanel(title = 'Gender Proportion',
+                                                              plotlyOutput(outputId = 'gender_distribution')),
+                                                     tabPanel(title = 'Imported Cases Proportion',
+                                                              plotlyOutput(outputId = 'imported_cases_distribution')))
+                                         ),
+                                     box(title = 'Summary Infomation in specific city(click map)',width = 6,
+                                         tabsetPanel(type = 'tabs',
+                                                     tabPanel(title = 'Age Distribution',
+                                                              plotlyOutput(outputId = 'city_age_bar_chart')),
+                                                     tabPanel(title = 'Gender Proportion',
+                                                              plotlyOutput(outputId = 'city_gender_pie_chart')),
+                                                     tabPanel(title = 'Imported Cases Proportion',
+                                                             plotlyOutput(outputId = 'city_imported_cases_pie_chart')))
+                                     )
                             )
                  ),
-                 
                  tabPanel(title = tags$p(icon('data'),'data'),
                           setBackgroundColor("#808080"),
                           sidebarPanel(width = 2,
@@ -504,21 +507,27 @@ server <- function(input, output, session) {
   output$age_distribution <- renderPlotly({
     plot_ly(data = tw_age_summary_df,
             x = ~age, y = ~case, type = 'bar',
-            marker = list(color = 'rgba(222,45,38,0.8)',line = list(color = 'rgb(8,48,107)')))
+            marker = list(color = 'rgba(222,45,38,0.8)',line = list(color = 'rgb(8,48,107)'))) %>% 
+      layout(title = "Age Distribution_Taiwan",
+             xaxis = list(title = "age strata"),
+             yaxis = list(title = "cases"))
   })
   output$gender_distribution <- renderPlotly({
     plot_ly(data = tw_gender_summary_df,
             labels = ~gender, values = ~case,
-            type = 'pie',sort = FALSE,showlegend = TRUE)
+            type = 'pie',sort = FALSE,
+            marker = list(colors = c('rgb(211,94,96)', 'rgb(128,133,133)'),
+                          line = list(color = '#FFFFFF', width = 1)),
+            showlegend = TRUE) %>% layout(title = "Gender Proportion_Taiwan")
   })
-  #area <- eventReactive(input$taiwan_map_shape_click, {
-  #  table_summary_data %>% dplyr::filter(city_name_eng == input$taiwan_map_shape_click$id) %>% 
-  #    dplyr::arrange(age,gender)
-  #})
-  #output$test_summary <- DT::renderDataTable({
-  #  if (is.null(area())) return()
-  #  area()
-  #})
+  output$imported_cases_distribution <- renderPlotly({
+    plot_ly(data = tw_imported_summary_df,
+            labels = ~is_imported, values = ~case,
+            type = 'pie',sort = FALSE,
+            marker = list(colors = c('rgb(211,94,96)', 'rgb(128,133,133)'),
+                          line = list(color = '#FFFFFF', width = 1)),
+            showlegend = TRUE) %>% layout(title = "Is Imported Cases_Taiwan")
+  })
   area_pie_plot_data <- eventReactive(input$taiwan_map_shape_click, {
     table_summary_data %>% dplyr::select(city_name_eng,gender,total_cases) %>% 
       dplyr::group_by(city_name_eng,gender) %>% dplyr::summarise(SUM = sum(total_cases)) %>% 
@@ -531,7 +540,7 @@ server <- function(input, output, session) {
             values = ~SUM, type = 'pie',
             marker = list(colors = c('rgb(211,94,96)', 'rgb(128,133,133)'),
                           line = list(color = '#FFFFFF', width = 1)),
-            showlegend = TRUE)
+            showlegend = TRUE) %>% layout(title = paste0('Gender Proportion_',input$taiwan_map_shape_click$id))
   })
   
   area_pie_plot_data2 <- eventReactive(input$taiwan_map_shape_click, {
@@ -540,14 +549,33 @@ server <- function(input, output, session) {
       dplyr::filter(city_name_eng == input$taiwan_map_shape_click$id) %>% 
       dplyr::arrange(age)
   })
-  output$city_age_pie_chart <- renderPlotly({
+  output$city_age_bar_chart <- renderPlotly({
     if (is.null(area_pie_plot_data2())) return()
     plot_ly(data = area_pie_plot_data2(),
-            labels = ~age,
-            values = ~SUM, type = 'pie',
-            sort = FALSE,showlegend = TRUE)
+            x = ~age,
+            y = ~SUM, type = 'bar',
+            marker = list(color = 'rgba(222,45,38,0.8)',line = list(color = 'rgb(8,48,107)'))) %>% 
+      layout(title = paste0('Age Distribution_',input$taiwan_map_shape_click$id),
+             xaxis = list(title = "age strata"),
+             yaxis = list(title = "cases"))
   })
-
+  area_pie_plot_data3 <- eventReactive(input$taiwan_map_shape_click, {
+    table_summary_data %>% dplyr::select(city_name_eng,is_imported,total_cases) %>% 
+      dplyr::group_by(city_name_eng,is_imported) %>% dplyr::summarise(SUM = sum(total_cases)) %>% 
+      dplyr::filter(city_name_eng == input$taiwan_map_shape_click$id) %>% 
+      dplyr::arrange(is_imported)
+  })
+  output$city_imported_cases_pie_chart <- renderPlotly({
+    if (is.null(area_pie_plot_data3())) return()
+    plot_ly(data = area_pie_plot_data3(),
+            labels = ~is_imported,
+            values = ~SUM, type = 'pie',
+            marker = list(colors = c('rgb(211,94,96)', 'rgb(128,133,133)'),
+                          line = list(color = '#FFFFFF', width = 1)),
+            showlegend = TRUE) %>% layout(title = paste0("Is Imported Cases_",input$taiwan_map_shape_click$id))
+  })
+  
+  
   filteredData4 <- reactive({
     data <- 
       if (input$data_type=="url_data") {

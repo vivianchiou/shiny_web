@@ -2,6 +2,12 @@
 
 ## New Image!!
 Follow [this](https://vivianchiou.github.io/shiny_web/img/plot_edgebundle.html) link for the interactive plot. A screenshot of the interface is provided below.
+說明：Taiwan cases relationship plot
+這是台灣個案關係圖，顯示著感染來源與相關病例，顏色說明分別為
+紅色：本土案例
+黑藍：境外移入
+橘黃：磐石軍艦
+
 ![new image](img/edgebundle.png)
 
 ## TSDC TEAM A DEMO

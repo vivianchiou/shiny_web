@@ -331,7 +331,7 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                                        ),
                                        dateInput(inputId = 'start_date',
                                                  label = 'Date Start:',
-                                                 value = as.character(Sys.Date())
+                                                 value = Last_update_date
                                        ),
                                        selectInput("Country", "Select Country/Region:",
                                                    choices = NULL)

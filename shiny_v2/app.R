@@ -1,11 +1,31 @@
 #0========================================================================================
 #< parameter >============================================================================
 options(stringsAsFactors = FALSE,scipen = 999)
-pgs <- c('magrittr','tidyverse','ggplot2','gganimate','gifski','plotly',
-         'mefa4','dplyr','gapminder','countrycode','tmap','sp','rworldmap',
-         'flexdashboard','shiny','shinydashboard','leaflet','RColorBrewer',
-         'highcharter','shinyWidgets','spdep','maptools','rgeos','sf','DT')
-easypackages::libraries(pgs)
+library(magrittr)
+library(tidyverse)
+library(ggplot2)
+library(gganimate)
+library(gifski)
+library(plotly)
+library(mefa4)
+library(dplyr)
+library(gapminder)
+library(countrycode)
+library(tmap)
+library(sp)
+library(rworldmap)
+library(flexdashboard)
+library(shiny)
+library(shinydashboard)
+library(leaflet)
+library(RColorBrewer)
+library(highcharter)
+library(shinyWidgets)
+library(spdep)
+library(maptools)
+library(rgeos)
+library(sf)
+library(DT)
 coords2continent = function(points)
 {  
   countriesSP <- getMap(resolution='low')
@@ -24,8 +44,6 @@ coords2continent = function(points)
   #indices$ADMIN  #returns country name
   #indices$ISO3 # returns the ISO3 code 
 }
-rm(pgs)
-#setwd('C:\\Users\\Taner\\Dropbox\\covid_19\\shiny_web-master')
 #1========================================================================================
 #< data import >==========================================================================
 df <- read_csv(url('https://covid.ourworldindata.org/data/ecdc/full_data.csv'))

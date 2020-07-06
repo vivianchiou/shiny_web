@@ -359,7 +359,7 @@ ui <- navbarPage(title = "Covid-19 dashboard!",
                           )
                           
                  ),
-                 navbarMenu(title = 'reports',
+                 navbarMenu(title = tags$p(icon('image'),'reports'),
                             tabPanel(title = 'cases relation_TW',
                                      sidebarPanel(width = 2,
                                                   title = 'control par',
